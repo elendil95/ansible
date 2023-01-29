@@ -95,3 +95,6 @@
       shell: stow -v bash -t /home/{{ remote_regular_user }}
       args:
         chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
+      become:yes
+      become_user: "{{ remote_regular_user}}"
+      become_method: "su"
