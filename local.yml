@@ -32,8 +32,8 @@
       file:
         path: /home/{{ remote_regular_user }}/GithubRepos
         state: directory
-        owner: {{ remote_regular_user }}
-        group: {{ remote_regular_user_group }}
+        owner: "{{ remote_regular_user }}"
+        group: "{{ remote_regular_user_group }}"
         mode: "0755"
 
     - name: clone dotfiles
@@ -66,15 +66,15 @@
       file:
         path: /home/{{ remote_regular_user }}/GithubRepos
         state: directory
-        owner: {{ remote_regular_user }}
-        group: {{ remote_regular_user_group }}
+        owner: "{{ remote_regular_user }}"
+        group: "{{ remote_regular_user_group }}"
         mode: "0755"
     - name: copy scripts to home/ folder
       copy:
         scr: /home/{{ remote_regular_user }}/GithubRepos/dotfiles/bin/
         dest: /home/{{ remote_regular_user }}/bin/
-        owner: {{ remote_regular_user }}
-        group: {{ remote_regular_user_group }}
+        owner: "{{ remote_regular_user }}"
+        group: "{{ remote_regular_user_group }}"
         mode: "0700"
 
 
@@ -86,7 +86,3 @@
       shell: stow -v bash -t {{ remote_regular_user }}
       args:
         chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
-
-
-
-
