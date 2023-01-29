@@ -1,0 +1,63 @@
+---
+- hosts: localhost
+  connection: local
+  become: true
+
+  tasks:
+    - name: get the non root remote user
+      set_fact:
+        remote_regular_user: "{{ ansible_env.SUDO_USER or ansible_user_id }}"
+
+    - name: update system
+      pacman:
+        update_cache: true
+        upgrade: true
+    - name: install VIM
+      pacman:
+        pacman: gvim
+        state: latest
+    - name: install Git
+      pacman:
+        pacman: git
+        state: latest
+    - name: install stow
+      pacman:
+        pacman: stow
+        state: latest
+    - name: install OpenSSH
+      pacman:
+        pacman: openssh
+        state: latest
+
+    - name: Create Git folders
+      file:
+        path: /home/{{ remote_regular_user }}/GithubRepos
+        state: directory
+        mode: "0755"
+
+    - name: clone dotfiles
+      git:
+        repo: 'https://github.com/elendil95/dotfiles.git'
+        dest: /home/{{ remote_regular_user }}/GithubRepos
+        clone: yes
+    - name: clone DWM
+      git:
+        repo: 'https://github.com/elendil95/dwm-build.git'
+        dest: /home/{{ remote_regular_user }}/GithubRepos
+        clone: yes
+    - name: clone st
+      git:
+        repo: 'https://github.com/elendil95/st-build.git'
+        dest: /home/{{ remote_regular_user }}/GithubRepos
+        clone: yes
+    - name: clone Dmenu
+      git:
+        repo: 'https://github.com/elendil95/dmenu-build.git'
+        dest: /home/{{ remote_regular_user }}/GithubRepos
+        clone: yes
+    - name: clone slStatus
+      git:
+        repo: 'https://github.com/elendil95/slstatus-build.git'
+        dest: /home/{{ remote_regular_user }}/GithubRepos
+        clone: yes
+
