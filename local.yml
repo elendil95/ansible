@@ -14,19 +14,19 @@
         upgrade: true
     - name: install VIM
       pacman:
-        pacman: gvim
+        name: gvim
         state: latest
     - name: install Git
       pacman:
-        pacman: git
+        name: git
         state: latest
     - name: install stow
       pacman:
-        pacman: stow
+        name: stow
         state: latest
     - name: install OpenSSH
       pacman:
-        pacman: openssh
+        name: openssh
         state: latest
 
     - name: Create Git folders
