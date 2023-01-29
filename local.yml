@@ -39,31 +39,31 @@
     - name: clone dotfiles
       git:
         repo: 'https://github.com/elendil95/dotfiles.git'
-        dest: /home/{{ remote_regular_user }}/GithubRepos/
+        dest: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
         clone: yes
         update: yes
     - name: clone DWM
       git:
         repo: 'https://github.com/elendil95/dwm-build.git'
-        dest: /home/{{ remote_regular_user }}/GithubRepos/
+        dest: /home/{{ remote_regular_user }}/GithubRepos/dwm-build
         clone: yes
         update: yes
     - name: clone st
       git:
         repo: 'https://github.com/elendil95/st-build.git'
-        dest: /home/{{ remote_regular_user }}/GithubRepos/
+        dest: /home/{{ remote_regular_user }}/GithubRepos/st-build
         clone: yes
         update: yes
     - name: clone Dmenu
       git:
         repo: 'https://github.com/elendil95/dmenu-build.git'
-        dest: /home/{{ remote_regular_user }}/GithubRepos/
+        dest: /home/{{ remote_regular_user }}/GithubRepos/dmenu-build
         clone: yes
         update: yes
     - name: clone slStatus
       git:
         repo: 'https://github.com/elendil95/slstatus-build.git'
-        dest: /home/{{ remote_regular_user }}/GithubRepos/
+        dest: /home/{{ remote_regular_user }}/GithubRepos/slstatus-build
         clone: yes
         update: yes
 
