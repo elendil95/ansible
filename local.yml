@@ -14,6 +14,7 @@
     - name: set user group as a fact just in case
       set_fact:
         remote_regular_user_group: "{{ main_group.stdout }}"
+
     - name: update system
       pacman:
         update_cache: true
@@ -27,6 +28,32 @@
           - openssh
         state: latest
         extra_args: --needed --noconfirm
+        
+    - name: Create temp user for building AUR packages
+      user:
+        name: aur_buildAgent
+        shell: /bin/bash
+        group: aur_buildAgent
+    - name: make temp AUR user run pacman without password
+      lineinfile:
+        path: /etc/sudoers.d/aur_builder-allow-to-sudo-pacman
+        state: present
+        line: "aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman"
+        validate: /usr/sbin/visudo -cf %s
+        create: yes
+
+    - name: Install yay
+      command: "{{ item }}"
+      args:
+        chdir: "/tmp/"
+      with_items:
+        - "git clone https://aur.archlinux.org/yay.git"
+        - "cd yay"
+        - "makepkg --needed -Acs"
+        - "makepkg -i"
+      become: yes
+      become_user: "aur_buildAgent"
+      become_method: "su"
 
     - name: Create Git folder
       file:
