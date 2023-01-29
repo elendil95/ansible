@@ -28,7 +28,7 @@
         state: latest
         extra_args: --needed --noconfirm
 
-    - name: Create Git folders
+    - name: Create Git folder
       file:
         path: /home/{{ remote_regular_user }}/GithubRepos
         state: directory
@@ -41,26 +41,31 @@
         repo: 'https://github.com/elendil95/dotfiles.git'
         dest: /home/{{ remote_regular_user }}/GithubRepos/
         clone: yes
+        update: yes
     - name: clone DWM
       git:
         repo: 'https://github.com/elendil95/dwm-build.git'
         dest: /home/{{ remote_regular_user }}/GithubRepos/
         clone: yes
+        update: yes
     - name: clone st
       git:
         repo: 'https://github.com/elendil95/st-build.git'
         dest: /home/{{ remote_regular_user }}/GithubRepos/
         clone: yes
+        update: yes
     - name: clone Dmenu
       git:
         repo: 'https://github.com/elendil95/dmenu-build.git'
         dest: /home/{{ remote_regular_user }}/GithubRepos/
         clone: yes
+        update: yes
     - name: clone slStatus
       git:
         repo: 'https://github.com/elendil95/slstatus-build.git'
         dest: /home/{{ remote_regular_user }}/GithubRepos/
         clone: yes
+        update: yes
 
     - name: Create bin home folder
       file:
