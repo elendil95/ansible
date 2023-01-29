@@ -12,22 +12,15 @@
       pacman:
         update_cache: true
         upgrade: true
-    - name: install VIM
+    - name: install very basic packages (vim, git, stow, ssh)
       pacman:
-        name: gvim
+        name: 
+          - gvim
+          - git
+          - stow
+          - openssh
         state: latest
-    - name: install Git
-      pacman:
-        name: git
-        state: latest
-    - name: install stow
-      pacman:
-        name: stow
-        state: latest
-    - name: install OpenSSH
-      pacman:
-        name: openssh
-        state: latest
+        extra-args: --needed --noconfirm
 
     - name: Create Git folders
       file:
