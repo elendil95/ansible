@@ -88,6 +88,6 @@
         path: /home/{{ remote_regular_user }}/.bashrc
         state: absent
     - name: stow in new bashrc
-      shell: stow -v bash -t {{ remote_regular_user }}
+      shell: stow -v bash -t /home/{{ remote_regular_user }}
       args:
         chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
