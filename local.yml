@@ -20,7 +20,7 @@
           - stow
           - openssh
         state: latest
-        extra-args: --needed --noconfirm
+        extra_args: --needed --noconfirm
 
     - name: Create Git folders
       file:
