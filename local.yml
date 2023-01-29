@@ -83,10 +83,14 @@
         mode: "0700"
 
 
-    - name: Delete OG bashrc
+    - name: Delete OG bash files
       file:
-        path: /home/{{ remote_regular_user }}/.bashrc
+        path: '{{ item }}'
         state: absent
+        with_items:
+          - /home/{{ remote_regular_user }}/.bashrc
+          - /home/{{ remote_regular_user }}/.bash_profile
+
     - name: stow in new bashrc
       shell: stow -v bash -t /home/{{ remote_regular_user }}
       args:
