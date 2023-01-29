@@ -4,10 +4,16 @@
   become: true
 
   tasks:
-    - name: get the non root remote user
+    - name: get the non-root remote user
       set_fact:
         remote_regular_user: "{{ ansible_env.SUDO_USER or ansible_user_id }}"
-
+    - name: Get the principal group for the non-root user
+      shell: id -ng {{remote_regular_user }}
+      register: main_group
+      ignore_errors: True
+    - name: set user group as a fact just in case
+      set_fact:
+        remote_regular_user_group: "{{ main_group }}"
     - name: update system
       pacman:
         update_cache: true
@@ -26,6 +32,8 @@
       file:
         path: /home/{{ remote_regular_user }}/GithubRepos
         state: directory
+        owner: {{ remote_regular_user }}
+        group: {{ remote_regular_user_group }}
         mode: "0755"
 
     - name: clone dotfiles
@@ -53,4 +61,32 @@
         repo: 'https://github.com/elendil95/slstatus-build.git'
         dest: /home/{{ remote_regular_user }}/GithubRepos
         clone: yes
+
+    - name: Create bin home folder
+      file:
+        path: /home/{{ remote_regular_user }}/GithubRepos
+        state: directory
+        owner: {{ remote_regular_user }}
+        group: {{ remote_regular_user_group }}
+        mode: "0755"
+    - name: copy scripts to home/ folder
+      copy:
+        scr: /home/{{ remote_regular_user }}/GithubRepos/dotfiles/bin/
+        dest: /home/{{ remote_regular_user }}/bin/
+        owner: {{ remote_regular_user }}
+        group: {{ remote_regular_user_group }}
+        mode: "0700"
+
+
+    - name: Delete OG bashrc
+      file:
+        path: /home/{{ remote_regular_user }}/.bashrc
+        state: absent
+    - name: stow in new bashrc
+      shell: stow -v bash -t {{ remote_regular_user }}
+      args:
+        chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
+
+
+
 
