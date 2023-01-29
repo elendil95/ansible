@@ -13,7 +13,7 @@
       ignore_errors: True
     - name: set user group as a fact just in case
       set_fact:
-        remote_regular_user_group: "{{ main_group }}"
+        remote_regular_user_group: "{{ main_group.stdout }}"
     - name: update system
       pacman:
         update_cache: true
