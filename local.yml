@@ -87,9 +87,9 @@
       file:
         path: '{{ item }}'
         state: absent
-        with_items:
-          - /home/{{ remote_regular_user }}/.bashrc
-          - /home/{{ remote_regular_user }}/.bash_profile
+      with_items:
+        - /home/{{ remote_regular_user }}/.bashrc
+        - /home/{{ remote_regular_user }}/.bash_profile
 
     - name: stow in new bashrc
       shell: stow -v bash -t /home/{{ remote_regular_user }}
