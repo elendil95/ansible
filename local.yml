@@ -28,32 +28,38 @@
           - openssh
         state: latest
         extra_args: --needed --noconfirm
-        
-    - name: Create temp user for building AUR packages
-      user:
-        name: aur_buildAgent
-        shell: /bin/bash
-        group: aur_buildAgent
-    - name: make temp AUR user run pacman without password
-      lineinfile:
-        path: /etc/sudoers.d/aur_builder-allow-to-sudo-pacman
-        state: present
-        line: "aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman"
-        validate: /usr/sbin/visudo -cf %s
-        create: yes
 
-    - name: Install yay
-      command: "{{ item }}"
+    - name: Create temporary build folder
+      file:
+        path: /home/{{ remote_regular_user }}/.tmp
+        state: directory
+        owner: "{{ remote_regular_user }}"
+        group: "{{ remote_regular_user_group }}"
+        mode: "0755"
+
+    - name: clone yay
+      command: git clone https://aur.archlinux.org/yay.git
       args:
-        chdir: "/tmp/"
-      with_items:
-        - "git clone https://aur.archlinux.org/yay.git"
-        - "cd yay"
-        - "makepkg --needed -Acs"
-        - "makepkg -i"
+        chdir:  /home/{{ remote_regular_user }}/.tmp
       become: yes
-      become_user: "aur_buildAgent"
-      become_method: "su"
+      become_user: "{{ remote_regular_user }}"
+    - name: make Yay
+      command: makepkg --needed -Acs --noconfirm
+      args:
+        chdir: /home/{{ remote_regular_user }}/.tmp/yay
+      become: yes
+      become_user: "{{ remote_regular_user }}"
+    - name: install Yay
+      command: makepkg -i --noconfirm
+      args:
+        chdir: /home/{{ remote_regular_user }}/.tmp/yay
+      become: yes
+      become_user: "{{ remote_regular_user }}"
+
+    - name: Install ansible AUR module
+      command: yay -S --noconfirm --needed ansible-collection-kewlfft-aur
+      become: yes
+      become_user: "{{ remote_regular_user }}"
 
     - name: Create Git folder
       file:
