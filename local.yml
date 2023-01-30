@@ -37,30 +37,43 @@
         group: "{{ remote_regular_user_group }}"
         mode: "0755"
 
+    - name: check if yay already exists
+      stat:
+        path: /usr/bin/yay
+      register: yay_location
+    - name: check if we already installed the ansible AUR extension
+      shell: pacman -Q | grep ansible-collection-kewlfft-aur | tr '\n' '\0'
+      register: aur_ext
+
     - name: clone yay
       command: git clone https://aur.archlinux.org/yay.git
       args:
         chdir:  /home/{{ remote_regular_user }}/.tmp
       become: yes
       become_user: "{{ remote_regular_user }}"
+      when: not yay_location.stat.exists
+  
     - name: make Yay
       command: makepkg --needed -Acs --noconfirm
       args:
         chdir: /home/{{ remote_regular_user }}/.tmp/yay
       become: yes
       become_user: "{{ remote_regular_user }}"
+      when: not yay_location.stat.exists
+
     - name: install Yay
       command: makepkg -i --noconfirm
       args:
         chdir: /home/{{ remote_regular_user }}/.tmp/yay
       become: yes
       become_user: "{{ remote_regular_user }}"
+      when: not yay_location.stat.exists
 
     - name: Install ansible AUR module
       command: yay -S --noconfirm --needed ansible-collection-kewlfft-aur
       become: yes
       become_user: "{{ remote_regular_user }}"
-
+      when: (yay_location.stat.exists) and (aur_ext.stdout.find('kewlfft') != -1)
     - name: Create Git folder
       file:
         path: /home/{{ remote_regular_user }}/GithubRepos
