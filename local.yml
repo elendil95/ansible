@@ -73,7 +73,7 @@
       command: yay -S --noconfirm --needed ansible-collection-kewlfft-aur
       become: yes
       become_user: "{{ remote_regular_user }}"
-      when: (yay_location.stat.exists) and (aur_ext.stdout.find('kewlfft') != -1)
+      when: (yay_location.stat.exists) and (aur_ext.stdout.find('kewlfft') <= 0)
     - name: Create Git folder
       file:
         path: /home/{{ remote_regular_user }}/GithubRepos
@@ -131,9 +131,13 @@
     - stat: 
         path: /home/{{ remote_regular_user }}/.bashrc
       register: bash_link
+    - debug:
+        msg: "bashrc exists: Value is {{ bash_link.stat}}" 
     - stat: 
         path: /home/{{ remote_regular_user }}/.vimrc
       register: vim_link
+    - debug:
+        msg: "vimrc exists: Value is {{ vim_link.stat}}" 
     - name: Delete OG bash files
       file:
         path: '{{ item }}'
@@ -141,13 +145,13 @@
       with_items:
         - /home/{{ remote_regular_user }}/.bashrc
         - /home/{{ remote_regular_user }}/.bash_profile
-      when: bash_link.stat.islink is defined and bash_link.stat.islink
+      when: (bash_link.stat.exists) and (not bash_link.stat.islnk)
 
     - name: Delete OG Vimrc
       file:
         path: /home/{{ remote_regular_user }}/.vimrc
         state: absent
-      when: vim_link.stat.islink is defined and vim_link.stat.islink
+      when: (vim_link.stat.exists) and (not vim_link.stat.islnk)
 
     - name: stow in new bashrc
       shell: stow -v bash -t /home/{{ remote_regular_user }}
@@ -156,7 +160,7 @@
       become: yes
       become_user: "{{ remote_regular_user}}"
       become_method: "su"
-      when: bash_link.stat.islink is defined and bash_link.stat.islink
+      when: (not bash_link.stat.exists) or (not bash_link.stat.islnk)
 
     - name: stow in new vimrc
       shell: stow -v vim -t /home/{{ remote_regular_user }}
@@ -165,4 +169,4 @@
       become: yes
       become_user: "{{ remote_regular_user}}"
       become_method: "su"
-      when: vim_link.stat.islink is defined and vim_link.stat.islink
+      when: (not vim_link.stat.exists) or (not vim_link.stat.islnk)
