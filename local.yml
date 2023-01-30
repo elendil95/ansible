@@ -128,7 +128,12 @@
         group: "{{ remote_regular_user_group }}"
         mode: "0700"
 
-
+    - stat: 
+        path: /home/{{ remote_regular_user }}/.bashrc
+      register: bash_link
+    - stat: 
+        path: /home/{{ remote_regular_user }}/.vimrc
+      register: vim_link
     - name: Delete OG bash files
       file:
         path: '{{ item }}'
@@ -136,6 +141,13 @@
       with_items:
         - /home/{{ remote_regular_user }}/.bashrc
         - /home/{{ remote_regular_user }}/.bash_profile
+      when: bash_link.stat.islink is defined and bash_link.stat.islink
+
+    - name: Delete OG Vimrc
+      file:
+        path: /home/{{ remote_regular_user }}/.vimrc
+        state: absent
+      when: vim_link.stat.islink is defined and vim_link.stat.islink
 
     - name: stow in new bashrc
       shell: stow -v bash -t /home/{{ remote_regular_user }}
@@ -144,3 +156,13 @@
       become: yes
       become_user: "{{ remote_regular_user}}"
       become_method: "su"
+      when: bash_link.stat.islink is defined and bash_link.stat.islink
+
+    - name: stow in new vimrc
+      shell: stow -v vim -t /home/{{ remote_regular_user }}
+      args:
+        chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
+      become: yes
+      become_user: "{{ remote_regular_user}}"
+      become_method: "su"
+      when: vim_link.stat.islink is defined and vim_link.stat.islink
