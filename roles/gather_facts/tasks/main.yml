@@ -1,0 +1,37 @@
+---
+  - name: get the non-root remote user
+    set_fact:
+      remote_regular_user: "{{ ansible_env.SUDO_USER or ansible_user_id }}"
+
+  - name: Get the principal group for the non-root user
+    shell: id -ng {{remote_regular_user }}
+    register: main_group
+    # ignore_errors: True
+  - debug:
+      msg: "The following is the output of the group command: {{main_group}}"
+  - name: set user group as a fact just in case
+    set_fact:
+      remote_regular_user_group: "{{ main_group.stdout }}"
+
+  - name: check if yay is already installed.
+    stat:
+      path: /usr/bin/yay
+    register: yay_location
+
+  - name: check if we already installed the ansible AUR extension
+    shell: pacman -Q | grep ansible-collection-kewlfft-aur | tr '\n' '\0'
+    register: aur_ext
+
+  - name: Check existence of .bashrc
+    stat: 
+      path: /home/{{ remote_regular_user }}/.bashrc
+    register: bash_link
+  - debug:
+      msg: "bashrc exists: Value is {{ bash_link.stat}}"
+          
+  - name: Check existance of .vimrc
+    stat: 
+      path: /home/{{ remote_regular_user }}/.vimrc
+    register: vim_link
+  - debug:
+      msg: "vimrc exists: Value is {{ vim_link.stat}}" 

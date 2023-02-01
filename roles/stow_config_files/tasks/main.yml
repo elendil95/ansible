@@ -1,0 +1,14 @@
+---
+  - name: stow in new bashrc
+    shell: stow -v bash -t /home/{{ remote_regular_user }}
+    args:
+      chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
+    when: (not bash_link.stat.exists) or (not bash_link.stat.islnk)
+
+  - name: stow in new vimrc
+    shell: stow -v vim -t /home/{{ remote_regular_user }}
+    args:
+      chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
+    when: (not vim_link.stat.exists) or (not vim_link.stat.islnk)
+
+

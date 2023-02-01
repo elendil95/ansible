@@ -1,0 +1,10 @@
+---
+  - name: install very basic packages (vim, git, stow, ssh)
+    pacman:
+      name: 
+        - gvim
+        - git
+        - stow
+        - openssh
+      state: latest
+      extra_args: --needed --noconfirm

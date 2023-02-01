@@ -1,0 +1,31 @@
+---
+  - name: Create bin home folder
+    file:
+      path: /home/{{ remote_regular_user }}/bin
+      state: directory
+      owner: "{{ remote_regular_user }}"
+      group: "{{ remote_regular_user_group }}"
+      mode: "0755"
+
+  - name: copy scripts to home/ folder
+    copy:
+      src: /home/{{ remote_regular_user }}/GithubRepos/dotfiles/bin/
+      dest: /home/{{ remote_regular_user }}/bin/
+      owner: "{{ remote_regular_user }}"
+      group: "{{ remote_regular_user_group }}"
+      mode: "0700"
+
+  - name: Delete existing bash files
+    file:
+      path: '{{ item }}'
+      state: absent
+    with_items:
+      - /home/{{ remote_regular_user }}/.bashrc
+      - /home/{{ remote_regular_user }}/.bash_profile
+    when: (bash_link.stat.exists) and (not bash_link.stat.islnk)
+
+  - name: Delete existing .vimrc
+    file:
+      path: /home/{{ remote_regular_user }}/.vimrc
+      state: absent
+    when: (vim_link.stat.exists) and (not vim_link.stat.islnk)

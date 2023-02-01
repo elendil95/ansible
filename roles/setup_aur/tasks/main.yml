@@ -1,0 +1,55 @@
+---
+  - name: check if the expected values are set
+    debug:
+      msg: "Value of remote_regular_user is {{remote_regular_user}}. Its group is {{remote_regular_user_group}}"
+  - name: Create the `aur_builder` user
+    become: yes
+    ansible.builtin.user:
+      name: aur_builder
+      create_home: yes
+      group: wheel
+
+  - name: Allow the `aur_builder` user to run `sudo pacman` without a password
+    become: yes
+    ansible.builtin.lineinfile:
+      path: /etc/sudoers.d/11-install-aur_builder
+      line: 'aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman'
+      create: yes
+      validate: 'visudo -cf %s'
+
+  - name: Create temporary build folder
+    file:
+      path: /home/{{ remote_regular_user }}/.tmp
+      state: directory
+      owner: "{{ remote_regular_user }}"
+      group: "{{ remote_regular_user_group }}"
+      mode: "0755"
+
+  - name: clone yay
+    git:
+      repo: https://aur.archlinux.org/yay.git
+      dest: /home/{{ remote_regular_user }}/.tmp/yay
+      clone: yes
+      when: not yay_location.stat.exists
+
+  - name: make Yay
+    command: makepkg --needed -Acs --noconfirm
+    args:
+      chdir: /home/{{ remote_regular_user }}/.tmp/yay
+    become: yes
+    become_user: aur_builder
+    when: not yay_location.stat.exists
+    
+  - name: install Yay
+    command: makepkg -i --noconfirm
+    args:
+      chdir: /home/{{ remote_regular_user }}/.tmp/yay
+    become: yes
+    become_user: aur_builder
+    when: not yay_location.stat.exists
+  
+  - name: Install ansible AUR module
+    command: yay -S --noconfirm --needed ansible-collection-kewlfft-aur
+    become: yes
+    become_user: aur_builder
+    when: (yay_location.stat.exists) and (aur_ext.stdout.find('kewlfft') <= 0)
