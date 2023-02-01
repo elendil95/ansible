@@ -2,171 +2,173 @@
 - hosts: localhost
   connection: local
   become: true
+  roles:
+    - gather_facts
+      become: true
+  # tasks:
+  #   - name: get the non-root remote user
+  #     set_fact:
+  #       remote_regular_user: "{{ ansible_env.SUDO_USER or ansible_user_id }}"
+  #   - name: Get the principal group for the non-root user
+  #     shell: id -ng {{remote_regular_user }}
+  #     register: main_group
+  #     ignore_errors: True
+  #   - name: set user group as a fact just in case
+  #     set_fact:
+  #       remote_regular_user_group: "{{ main_group.stdout }}"
 
-  tasks:
-    - name: get the non-root remote user
-      set_fact:
-        remote_regular_user: "{{ ansible_env.SUDO_USER or ansible_user_id }}"
-    - name: Get the principal group for the non-root user
-      shell: id -ng {{remote_regular_user }}
-      register: main_group
-      ignore_errors: True
-    - name: set user group as a fact just in case
-      set_fact:
-        remote_regular_user_group: "{{ main_group.stdout }}"
+  #   - name: update system
+  #     pacman:
+  #       update_cache: true
+  #       upgrade: true
+  #   - name: install very basic packages (vim, git, stow, ssh)
+  #     pacman:
+  #       name: 
+  #         - gvim
+  #         - git
+  #         - stow
+  #         - openssh
+  #       state: latest
+  #       extra_args: --needed --noconfirm
 
-    - name: update system
-      pacman:
-        update_cache: true
-        upgrade: true
-    - name: install very basic packages (vim, git, stow, ssh)
-      pacman:
-        name: 
-          - gvim
-          - git
-          - stow
-          - openssh
-        state: latest
-        extra_args: --needed --noconfirm
+  #   - name: Create temporary build folder
+  #     file:
+  #       path: /home/{{ remote_regular_user }}/.tmp
+  #       state: directory
+  #       owner: "{{ remote_regular_user }}"
+  #       group: "{{ remote_regular_user_group }}"
+  #       mode: "0755"
 
-    - name: Create temporary build folder
-      file:
-        path: /home/{{ remote_regular_user }}/.tmp
-        state: directory
-        owner: "{{ remote_regular_user }}"
-        group: "{{ remote_regular_user_group }}"
-        mode: "0755"
+  #   - name: check if yay already exists
+  #     stat:
+  #       path: /usr/bin/yay
+  #     register: yay_location
+  #   - name: check if we already installed the ansible AUR extension
+  #     shell: pacman -Q | grep ansible-collection-kewlfft-aur | tr '\n' '\0'
+  #     register: aur_ext
 
-    - name: check if yay already exists
-      stat:
-        path: /usr/bin/yay
-      register: yay_location
-    - name: check if we already installed the ansible AUR extension
-      shell: pacman -Q | grep ansible-collection-kewlfft-aur | tr '\n' '\0'
-      register: aur_ext
-
-    - name: clone yay
-      command: git clone https://aur.archlinux.org/yay.git
-      args:
-        chdir:  /home/{{ remote_regular_user }}/.tmp
-      become: yes
-      become_user: "{{ remote_regular_user }}"
-      when: not yay_location.stat.exists
+  #   - name: clone yay
+  #     command: git clone https://aur.archlinux.org/yay.git
+  #     args:
+  #       chdir:  /home/{{ remote_regular_user }}/.tmp
+  #     become: yes
+  #     become_user: "{{ remote_regular_user }}"
+  #     when: not yay_location.stat.exists
   
-    - name: make Yay
-      command: makepkg --needed -Acs --noconfirm
-      args:
-        chdir: /home/{{ remote_regular_user }}/.tmp/yay
-      become: yes
-      become_user: "{{ remote_regular_user }}"
-      when: not yay_location.stat.exists
+  #   - name: make Yay
+  #     command: makepkg --needed -Acs --noconfirm
+  #     args:
+  #       chdir: /home/{{ remote_regular_user }}/.tmp/yay
+  #     become: yes
+  #     become_user: "{{ remote_regular_user }}"
+  #     when: not yay_location.stat.exists
 
-    - name: install Yay
-      command: makepkg -i --noconfirm
-      args:
-        chdir: /home/{{ remote_regular_user }}/.tmp/yay
-      become: yes
-      become_user: "{{ remote_regular_user }}"
-      when: not yay_location.stat.exists
+  #   - name: install Yay
+  #     command: makepkg -i --noconfirm
+  #     args:
+  #       chdir: /home/{{ remote_regular_user }}/.tmp/yay
+  #     become: yes
+  #     become_user: "{{ remote_regular_user }}"
+  #     when: not yay_location.stat.exists
 
-    - name: Install ansible AUR module
-      command: yay -S --noconfirm --needed ansible-collection-kewlfft-aur
-      become: yes
-      become_user: "{{ remote_regular_user }}"
-      when: (yay_location.stat.exists) and (aur_ext.stdout.find('kewlfft') <= 0)
-    - name: Create Git folder
-      file:
-        path: /home/{{ remote_regular_user }}/GithubRepos
-        state: directory
-        owner: "{{ remote_regular_user }}"
-        group: "{{ remote_regular_user_group }}"
-        mode: "0755"
+  #   - name: Install ansible AUR module
+  #     command: yay -S --noconfirm --needed ansible-collection-kewlfft-aur
+  #     become: yes
+  #     become_user: "{{ remote_regular_user }}"
+  #     when: (yay_location.stat.exists) and (aur_ext.stdout.find('kewlfft') <= 0)
+  #   - name: Create Git folder
+  #     file:
+  #       path: /home/{{ remote_regular_user }}/GithubRepos
+  #       state: directory
+  #       owner: "{{ remote_regular_user }}"
+  #       group: "{{ remote_regular_user_group }}"
+  #       mode: "0755"
 
-    - name: clone dotfiles
-      git:
-        repo: 'https://github.com/elendil95/dotfiles.git'
-        dest: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
-        clone: yes
-        update: yes
-    - name: clone DWM
-      git:
-        repo: 'https://github.com/elendil95/dwm-build.git'
-        dest: /home/{{ remote_regular_user }}/GithubRepos/dwm-build
-        clone: yes
-        update: yes
-    - name: clone st
-      git:
-        repo: 'https://github.com/elendil95/st-build.git'
-        dest: /home/{{ remote_regular_user }}/GithubRepos/st-build
-        clone: yes
-        update: yes
-    - name: clone Dmenu
-      git:
-        repo: 'https://github.com/elendil95/dmenu-build.git'
-        dest: /home/{{ remote_regular_user }}/GithubRepos/dmenu-build
-        clone: yes
-        update: yes
-    - name: clone slStatus
-      git:
-        repo: 'https://github.com/elendil95/slstatus-build.git'
-        dest: /home/{{ remote_regular_user }}/GithubRepos/slstatus-build
-        clone: yes
-        update: yes
+  #   - name: clone dotfiles
+  #     git:
+  #       repo: 'https://github.com/elendil95/dotfiles.git'
+  #       dest: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
+  #       clone: yes
+  #       update: yes
+  #   - name: clone DWM
+  #     git:
+  #       repo: 'https://github.com/elendil95/dwm-build.git'
+  #       dest: /home/{{ remote_regular_user }}/GithubRepos/dwm-build
+  #       clone: yes
+  #       update: yes
+  #   - name: clone st
+  #     git:
+  #       repo: 'https://github.com/elendil95/st-build.git'
+  #       dest: /home/{{ remote_regular_user }}/GithubRepos/st-build
+  #       clone: yes
+  #       update: yes
+  #   - name: clone Dmenu
+  #     git:
+  #       repo: 'https://github.com/elendil95/dmenu-build.git'
+  #       dest: /home/{{ remote_regular_user }}/GithubRepos/dmenu-build
+  #       clone: yes
+  #       update: yes
+  #   - name: clone slStatus
+  #     git:
+  #       repo: 'https://github.com/elendil95/slstatus-build.git'
+  #       dest: /home/{{ remote_regular_user }}/GithubRepos/slstatus-build
+  #       clone: yes
+  #       update: yes
 
-    - name: Create bin home folder
-      file:
-        path: /home/{{ remote_regular_user }}/bin
-        state: directory
-        owner: "{{ remote_regular_user }}"
-        group: "{{ remote_regular_user_group }}"
-        mode: "0755"
-    - name: copy scripts to home/ folder
-      copy:
-        src: /home/{{ remote_regular_user }}/GithubRepos/dotfiles/bin/
-        dest: /home/{{ remote_regular_user }}/bin/
-        owner: "{{ remote_regular_user }}"
-        group: "{{ remote_regular_user_group }}"
-        mode: "0700"
+  #   - name: Create bin home folder
+  #     file:
+  #       path: /home/{{ remote_regular_user }}/bin
+  #       state: directory
+  #       owner: "{{ remote_regular_user }}"
+  #       group: "{{ remote_regular_user_group }}"
+  #       mode: "0755"
+  #   - name: copy scripts to home/ folder
+  #     copy:
+  #       src: /home/{{ remote_regular_user }}/GithubRepos/dotfiles/bin/
+  #       dest: /home/{{ remote_regular_user }}/bin/
+  #       owner: "{{ remote_regular_user }}"
+  #       group: "{{ remote_regular_user_group }}"
+  #       mode: "0700"
 
-    - stat: 
-        path: /home/{{ remote_regular_user }}/.bashrc
-      register: bash_link
-    - debug:
-        msg: "bashrc exists: Value is {{ bash_link.stat}}" 
-    - stat: 
-        path: /home/{{ remote_regular_user }}/.vimrc
-      register: vim_link
-    - debug:
-        msg: "vimrc exists: Value is {{ vim_link.stat}}" 
-    - name: Delete OG bash files
-      file:
-        path: '{{ item }}'
-        state: absent
-      with_items:
-        - /home/{{ remote_regular_user }}/.bashrc
-        - /home/{{ remote_regular_user }}/.bash_profile
-      when: (bash_link.stat.exists) and (not bash_link.stat.islnk)
+  #   - stat: 
+  #       path: /home/{{ remote_regular_user }}/.bashrc
+  #     register: bash_link
+  #   - debug:
+  #       msg: "bashrc exists: Value is {{ bash_link.stat}}" 
+  #   - stat: 
+  #       path: /home/{{ remote_regular_user }}/.vimrc
+  #     register: vim_link
+  #   - debug:
+  #       msg: "vimrc exists: Value is {{ vim_link.stat}}" 
+  #   - name: Delete OG bash files
+  #     file:
+  #       path: '{{ item }}'
+  #       state: absent
+  #     with_items:
+  #       - /home/{{ remote_regular_user }}/.bashrc
+  #       - /home/{{ remote_regular_user }}/.bash_profile
+  #     when: (bash_link.stat.exists) and (not bash_link.stat.islnk)
 
-    - name: Delete OG Vimrc
-      file:
-        path: /home/{{ remote_regular_user }}/.vimrc
-        state: absent
-      when: (vim_link.stat.exists) and (not vim_link.stat.islnk)
+  #   - name: Delete OG Vimrc
+  #     file:
+  #       path: /home/{{ remote_regular_user }}/.vimrc
+  #       state: absent
+  #     when: (vim_link.stat.exists) and (not vim_link.stat.islnk)
 
-    - name: stow in new bashrc
-      shell: stow -v bash -t /home/{{ remote_regular_user }}
-      args:
-        chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
-      become: yes
-      become_user: "{{ remote_regular_user}}"
-      become_method: "su"
-      when: (not bash_link.stat.exists) or (not bash_link.stat.islnk)
+  #   - name: stow in new bashrc
+  #     shell: stow -v bash -t /home/{{ remote_regular_user }}
+  #     args:
+  #       chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
+  #     become: yes
+  #     become_user: "{{ remote_regular_user}}"
+  #     become_method: "su"
+  #     when: (not bash_link.stat.exists) or (not bash_link.stat.islnk)
 
-    - name: stow in new vimrc
-      shell: stow -v vim -t /home/{{ remote_regular_user }}
-      args:
-        chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
-      become: yes
-      become_user: "{{ remote_regular_user}}"
-      become_method: "su"
-      when: (not vim_link.stat.exists) or (not vim_link.stat.islnk)
+  #   - name: stow in new vimrc
+  #     shell: stow -v vim -t /home/{{ remote_regular_user }}
+  #     args:
+  #       chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
+  #     become: yes
+  #     become_user: "{{ remote_regular_user}}"
+  #     become_method: "su"
+  #     when: (not vim_link.stat.exists) or (not vim_link.stat.islnk)
