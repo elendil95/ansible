@@ -1,0 +1,8 @@
+---
+tasks:
+  - name: Install AUR packages
+    kewlfft.aur.aur:
+      use: yay
+      name:
+        - discord
+        - light-git
