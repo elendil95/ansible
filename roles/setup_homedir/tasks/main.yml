@@ -15,6 +15,16 @@
       group: "{{ remote_regular_user_group }}"
       mode: "0700"
 
+  - name: allow local user to run some commands without sudo pw, so that scripts will work
+    become: true
+    ansible.builtin.lineinfile:
+      path: /etc/sudoers.d/12-{{ remote_regular_user }}
+      line: '%wheel ALL=(ALL:ALL) NOPASSWD: /usr/bin/poweroff, /usr/bin/reboot, /usr/bin/shutdown, /usr/bin/systemctl'
+      create: yes
+      validate: 'visudo -cf %s'
+  - debug:  
+        msg: "Created file is called 12-{{ remote_regular_user }}" 
+
   - name: Delete existing bash files
     file:
       path: '{{ item }}'
