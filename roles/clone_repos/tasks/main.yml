@@ -7,36 +7,14 @@
       group: "{{ remote_regular_user_group }}"
       mode: "0755"
 
-  - name: clone dotfiles
+  - name: clone personal repositories
     git:
-      repo: 'https://github.com/elendil95/dotfiles.git'
-      dest: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
+      repo: '{{item.repo}}'
+      dest: /home/{{ remote_regular_user }}/GithubRepos/{{item.folder_name}}
       clone: yes
-      update: yes
-
-  - name: clone DWM
-    git:
-      repo: 'https://github.com/elendil95/dwm-build.git'
-      dest: /home/{{ remote_regular_user }}/GithubRepos/dwm-build
-      clone: yes
-      update: yes
-
-  - name: clone st
-    git:
-      repo: 'https://github.com/elendil95/st-build.git'
-      dest: /home/{{ remote_regular_user }}/GithubRepos/st-build
-      clone: yes
-      update: yes
-        
-  - name: clone Dmenu
-    git:
-      repo: 'https://github.com/elendil95/dmenu-build.git'
-      dest: /home/{{ remote_regular_user }}/GithubRepos/dmenu-build
-      clone: yes
-      update: yes
-  - name: clone slStatus
-    git:
-      repo: 'https://github.com/elendil95/slstatus-build.git'
-      dest: /home/{{ remote_regular_user }}/GithubRepos/slstatus-build
-      clone: yes
-      update: yes
+    loop:
+    - {repo: https://github.com/elendil95/dotfiles.git, folder_name: dotfiles}
+    - {repo: https://github.com/elendil95/dwm-build.git, folder_name: dwm-build}
+    - {repo: https://github.com/elendil95/st-build.git, folder_name: st-build}
+    - {repo: https://github.com/elendil95/dmenu-build.git, folder_name: dmenu-build}
+    - {repo: https://github.com/elendil95/slstatus-build.git, folder_name: slstatus-build}
