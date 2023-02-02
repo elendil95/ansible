@@ -1,5 +1,4 @@
 ---
-tasks:
   - name: Install AUR packages
     kewlfft.aur.aur:
       use: yay

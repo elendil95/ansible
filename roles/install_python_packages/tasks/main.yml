@@ -2,4 +2,4 @@
   - name: Install Python packages
     ansible.builtin.pip:
       name:
-        - pywal
+        - amongus
