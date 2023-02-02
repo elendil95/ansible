@@ -3,14 +3,14 @@
     debug:
       msg: "Value of remote_regular_user is {{remote_regular_user}}. Its group is {{remote_regular_user_group}}"
   - name: Create the `aur_builder` user
-    become: yes
+    become: true
     ansible.builtin.user:
       name: aur_builder
       create_home: yes
       group: wheel
 
   - name: Allow the `aur_builder` user to run `sudo pacman` without a password
-    become: yes
+    become: true
     ansible.builtin.lineinfile:
       path: /etc/sudoers.d/11-install-aur_builder
       line: 'aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman'
@@ -36,7 +36,7 @@
     command: makepkg --needed -Acs --noconfirm
     args:
       chdir: /home/{{ remote_regular_user }}/.tmp/yay
-    become: yes
+    become: true
     become_user: aur_builder
     when: not yay_location.stat.exists
     
@@ -44,12 +44,12 @@
     command: makepkg -i --noconfirm
     args:
       chdir: /home/{{ remote_regular_user }}/.tmp/yay
-    become: yes
+    become: true
     become_user: aur_builder
     when: not yay_location.stat.exists
   
   - name: Install ansible AUR module
     command: yay -S --noconfirm --needed ansible-collection-kewlfft-aur
-    become: yes
+    become: true
     become_user: aur_builder
     when: (yay_location.stat.exists) and (aur_ext.stdout.find('kewlfft') <= 0)
