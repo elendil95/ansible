@@ -41,8 +41,6 @@
       chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
     creates: /home/{{ remote_regular_user }}/.tmux.conf
 
-  - name: stow zshrc
-    command: stow -v zsh -t /home/{{ remote_regular_user }}
-    args:
-      chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
-    removes: /home/{{ remote_regular_user }}/.zshrc
+ 
+  - import_tasks:
+      file: setup-omzsh.yml

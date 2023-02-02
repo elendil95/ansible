@@ -1,0 +1,37 @@
+---
+- name: run the script
+  command: sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" "" --unattended
+  args:
+    chdir: /home/{{ remote_regular_user }}
+  register: omzsh_output
+
+- name: clone plugins
+  git:
+    repo: "{{ item.repo }}"
+    dest: "/home/{{ remote_regular_user }}/.oh-my-zsh/custom/{{ item.folder_name}}"
+    clone: yes
+  loop:
+  - {repo: https://github.com/zsh-users/zsh-history-substring-search, folder_name: zsh-history-substring-search}
+  - {repo: https://github.com/zsh-users/zsh-syntax-highlighting.git, folder_name: zsh-syntax-highlighting}
+  - {repo: https://github.com/softmoth/zsh-vim-mode.git, folder_name: zsh-vim-mode}
+
+- name: copy zsh configs 
+  copy:
+      src: /home/{{ remote_regular_user }}/GithubRepos/dotfiles/oh-my-zsh/.oh-my-zsh/custom/{{ item }}
+      dest: /home/{{ remote_regular_user }}/.oh-my-zsh/custom/
+      owner: "{{ remote_regular_user }}"
+      group: "{{ remote_regular_user_group }}"
+      mode: "0644"
+      force: true
+  with_items:
+    - aliases.zsh
+    - example.zsh
+
+- name: Change shell for regular user to zsh
+  command: chsh -s usr/bin/zsh {{ remote_regular_user }}
+  become: true
+
+- name: stow zshrc
+  command: stow -v zsh -t /home/{{ remote_regular_user }}
+  args:
+    chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
