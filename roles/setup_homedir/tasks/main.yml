@@ -29,3 +29,9 @@
       path: /home/{{ remote_regular_user }}/.vimrc
       state: absent
     when: (vim_link.stat.exists) and (not vim_link.stat.islnk)
+  
+  - name: Create folders in home if they don't exist
+    command: xdg-user-dirs-update
+    args:
+      creates: /home/{{ remote_regular_user }}/.icons
+

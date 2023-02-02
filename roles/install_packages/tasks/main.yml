@@ -6,5 +6,42 @@
         - git
         - stow
         - openssh
+        - ttf-ubuntu-font-family 
+        - noto-fonts 
+        - ttf-droid 
+        - ttf-dejavu 
+        - ttf-hackA
+        - ttf-font-awesome
+        - ttf-ms-fonts 
+        - xdg-user-dirs 
+        - xdg-user-dirs-gtk
+        - rxvt-unicode urxvt-perls
+        - python-pip
+        - powerline-vim
+        - powerline-fonts
+        - zsh 
+        - zsh-doc 
+        - zsh-autosuggestions 
+        - zsh-completions 
+        - zsh-lovers 
+        - tig
+      state: latest
+      extra_args: --needed --noconfirm
+
+  - name: install packages needed by dwm
+    pacman:
+      name:
+        - python-pywa
+        - picom
+        - xsettingsd
+        - network-manager-applet
+        - syncthing-gtk
+        - redshift
+        - xorg-server-devel
+        - xorg-setxkbmap
+        - xorg-xinit
+        - xorg-xbacklight
+        - light-locker
+        - gnome-keyring
       state: latest
       extra_args: --needed --noconfirm

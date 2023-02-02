@@ -4,5 +4,12 @@ tasks:
     kewlfft.aur.aur:
       use: yay
       name:
-        - discord
+        - ttf-nerd-fonts-hack-complete-git
+        - urxvt-resize-font-git
         - light-git
+  
+  - name: Install AUR packages needed for DWM
+    kewlfft.aur.aur:
+      use: yay
+      name:
+        - pa-applet-git
