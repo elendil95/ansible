@@ -7,7 +7,7 @@
       group: "{{ remote_regular_user_group }}"
       mode: "0755"
 
-  - name: copy scripts to home/ folder
+  - name: copy scripts to home/bin folder
     copy:
       src: /home/{{ remote_regular_user }}/GithubRepos/dotfiles/bin/
       dest: /home/{{ remote_regular_user }}/bin/
@@ -35,3 +35,18 @@
     args:
       creates: /home/{{ remote_regular_user }}/.icons
 
+  - name: make wallpaper folder
+    file: 
+      path: /home/{{ remote_regular_user }}/Pictures/std_wallpapers 
+      state: directory
+      owner: "{{ remote_regular_user }}"
+      group: "{{ remote_regular_user_group }}"
+      mode: "0700"
+
+  - name: copy over wallpapers
+    copy:
+      src: wallpapers/.*
+      dest: /home/{{ remote_regular_user }}/Pictures/std_wallpapers
+      owner: "{{ remote_regular_user }}"
+      group: "{{ remote_regular_user_group }}"
+      mode: "0644"
