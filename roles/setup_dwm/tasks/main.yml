@@ -15,7 +15,14 @@
       group: "{{ remote_regular_user_group }}"
       mode: "0700"
 
-  ### Make .dwm/autostart.sh here from template
+  - name: copy over autostart config file
+    template: 
+      src: autostart.j2
+      dest: /home/{{ remote_regular_user }}/.dwm/
+      owner: "{{ remote_regular_user }}"
+      group: "{{ remote_regular_user_group }}"
+      mode: "0744"
+
 
   - name: setup pywall for dwm
     copy:
@@ -28,12 +35,9 @@
   - name: pick a random wallpaper
     command: ls -l /home/{{ remote_regular_user }}/Pictures/std_wallpapers|awk 'NR>1 {print $NF}'
     register: wallpapers   
+
   - name: set a wallpaper with pywall at random
     command: wal -i {{wallpapers.stdout_lines|random}}
     register: wal
   - debug:
       msg: "wal output: {{wal.stdout}}"
-        # Copy over wallpapers
-        # run pywall once to generate colorscheme
-        #
-        # Compile DWM, either here or in a separate role
