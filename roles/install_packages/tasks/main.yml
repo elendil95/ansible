@@ -6,6 +6,8 @@
         - git
         - stow
         - openssh
+        - curl
+        - wget
         - ttf-ubuntu-font-family 
         - noto-fonts 
         - ttf-droid 
@@ -25,13 +27,19 @@
         - zsh-completions 
         - zsh-lovers 
         - tig
+        - bluez
+        - blueman
+        - pinta
+        - ristretto
+        - mpv
+        - vlc
       state: latest
       extra_args: --needed --noconfirm
 
   - name: install packages needed by dwm
     pacman:
       name:
-        - python-pywa
+        - python-pywal
         - picom
         - xsettingsd
         - network-manager-applet
@@ -41,7 +49,21 @@
         - xorg-setxkbmap
         - xorg-xinit
         - xorg-xbacklight
+        - xorgproto
         - light-locker
         - gnome-keyring
+        - pamixer
+        - firefox
+        - keepassxc
+        - thunderbird
+        - thunar
+        - cmus
+        - calcurse
+        - gnome-calculator
+        - maim
+        - notify-osd
+        - trash-cli 
+        - atool 
+        - highlight
       state: latest
       extra_args: --needed --noconfirm
