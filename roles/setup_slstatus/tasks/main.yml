@@ -1,0 +1,10 @@
+---
+  - name: compile slstatus
+    command: make
+    args:
+      chdir: /home/{{ remote_regular_user }}/GithubRepos/slstatus-build
+  - name: Install slstatus
+    command: make install
+    args:
+      chdir: /home/{{ remote_regular_user }}/GithubRepos/slstatus-build
+    become: true

@@ -10,4 +10,7 @@
     - { role: clone_repos, become: false }
     - { role: setup_homedir, become: false }
     - { role: stow_config_files, become: false }
+    - { role: setup_st, become: false }
+    - { role: setup_dmenu, become: false }
+    - { role: setup_slstatus, become: false }
     - { role: setup_dwm, become: false }

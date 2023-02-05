@@ -1,0 +1,16 @@
+---
+  - name: stow Xresources
+    command: stow -v Xresources -t /home/{{ remote_regular_user }}
+    args:
+      chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
+    # creates: /home/{{ remote_regular_user }}/.Xresources
+
+  - name: compile ST
+    command: make
+    args:
+      chdir: /home/{{ remote_regular_user }}/GithubRepos/st-build
+  - name: Install ST
+    command: make install
+    args:
+      chdir: /home/{{ remote_regular_user }}/GithubRepos/st-build
+    become: true
