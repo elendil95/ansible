@@ -1,4 +1,8 @@
 ---
+  - name: refresh repos
+    pacman:
+      update_cache: true
+
   - name: install very basic packages (vim, git, stow, ssh)
     pacman:
       name: 
@@ -12,12 +16,12 @@
         - noto-fonts 
         - ttf-droid 
         - ttf-dejavu 
-        - ttf-hackA
+        - ttf-hack
         - ttf-font-awesome
-        - ttf-ms-fonts 
         - xdg-user-dirs 
         - xdg-user-dirs-gtk
-        - rxvt-unicode urxvt-perls
+        - rxvt-unicode 
+        - urxvt-perls
         - python-pip
         - powerline-vim
         - powerline-fonts
@@ -43,7 +47,6 @@
         - picom
         - xsettingsd
         - network-manager-applet
-        - syncthing-gtk
         - redshift
         - xorg-server-devel
         - xorg-setxkbmap
