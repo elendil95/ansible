@@ -1,7 +1,7 @@
 ---
   - name: check if the expected values are set
     debug:
-      msg: "Value of remote_regular_user is {{remote_regular_user}}. Its group is {{remote_regular_user_group}}"
+      msg: "Value of remote_regular_user is {{ remote_regular_user }}. Its group is {{ remote_regular_user_group }}"
   - name: Create the `aur_builder` user
     become: true
     ansible.builtin.user:
