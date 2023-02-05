@@ -30,7 +30,7 @@
       repo: https://aur.archlinux.org/yay.git
       dest: /home/{{ remote_regular_user }}/.tmp/yay
       clone: yes
-      when: not yay_location.stat.exists
+    when: not yay_location.stat.exists
 
   - name: make Yay
     command: makepkg --needed -Acs --noconfirm
