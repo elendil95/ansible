@@ -33,11 +33,11 @@
       mode: "0644"
 
   - name: pick a random wallpaper
-    command: ls -l /home/{{ remote_regular_user }}/Pictures/std_wallpapers|awk 'NR>1 {print $NF}'
+    shell: ls -l /home/{{ remote_regular_user }}/Pictures/std_wallpapers | awk 'NR>1 {print $NF}'
     register: wallpapers   
 
   - name: set a wallpaper with pywall at random
-    command: wal -i {{wallpapers.stdout_lines|random}}
+    command: wal -i /home/{{ remote_regular_user }}/Pictures/std_wallpapers/{{wallpapers.stdout_lines|random}}
     register: wal
   - debug:
       msg: "wal output: {{wal.stdout}}"
@@ -47,8 +47,13 @@
     args:
       chdir: /home/{{ remote_regular_user }}/GithubRepos/dwm-build
 
-  - name: Compile dwm
+  - name: install dwm
     command: make install
     args:
       chdir: /home/{{ remote_regular_user }}/GithubRepos/dwm-build
     become: true
+
+  - name: cleanup
+    command: make clean
+    args:
+      chdir: /home/{{ remote_regular_user }}/GithubRepos/dwm-build
