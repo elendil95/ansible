@@ -3,12 +3,17 @@
     set_fact:
       remote_regular_user: "{{ ansible_env.SUDO_USER or ansible_user_id }}"
 
+  - name: get principal GID for remote regular user
+    set_fact:
+      remote_regular_gid: "{{ ansible_env.SUDO_GID or ansible_user_gid }}"
+
   - name: Get the principal group for the non-root user
-    shell: id -ng {{remote_regular_user }}
+    command: id -ng {{remote_regular_gid}}
     register: main_group
-    # ignore_errors: True
+      # ignore_errors: True
   - debug:
       msg: "The following is the output of the group command: {{main_group}}"
+  
   - name: set user group as a fact just in case
     set_fact:
       remote_regular_user_group: "{{ main_group.stdout }}"
