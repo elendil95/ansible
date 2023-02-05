@@ -55,8 +55,13 @@
 
   - name: copy over wallpapers
     copy:
-      src: wallpapers/.*
-      dest: /home/{{ remote_regular_user }}/Pictures/std_wallpapers
+      src: files/
+      dest: /home/{{ remote_regular_user }}/Pictures/std_wallpapers 
       owner: "{{ remote_regular_user }}"
       group: "{{ remote_regular_user_group }}"
       mode: "0644"
+      # directory_mode: true
+      # remote_src: true
+    # with_fileglob:
+      # - "*.png"
+      # - "*.jpg"
