@@ -6,6 +6,7 @@
       owner: root
       group: root
       mode: "0644"
+    become: true
 
   - name: make .dwm folder
     file: 
@@ -22,7 +23,6 @@
       owner: "{{ remote_regular_user }}"
       group: "{{ remote_regular_user_group }}"
       mode: "0744"
-
 
   - name: setup pywall for dwm
     copy:
@@ -41,3 +41,14 @@
     register: wal
   - debug:
       msg: "wal output: {{wal.stdout}}"
+
+  - name: Compile dwm
+    command: make
+    args:
+      chdir: /home/{{ remote_regular_user }}/GithubRepos/dwm-build
+
+  - name: Compile dwm
+    command: make install
+    args:
+      chdir: /home/{{ remote_regular_user }}/GithubRepos/dwm-build
+    become: true
