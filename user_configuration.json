@@ -1,0 +1,52 @@
+{
+    "additional-repositories": [
+        "multilib"
+    ],
+    "audio": "pulseaudio",
+    "config_version": "2.5.1",
+    "debug": false,
+    "desktop-environment": "xfce4",
+    "gfx_driver": "All open-source (default)",
+    "harddrives": [
+        "/dev/sda"
+    ],
+    "hostname": "archlinux",
+    "kernels": [
+        "linux",
+        "linux-lts"
+    ],
+    "keyboard-layout": "it",
+    "mirror-region": {
+        "Denmark": {
+            "http://mirror.one.com/archlinux/$repo/os/$arch": true,
+            "http://mirrors.dotsrc.org/archlinux/$repo/os/$arch": true,
+            "https://mirror.one.com/archlinux/$repo/os/$arch": true,
+            "https://mirror.safe-con.dk/archlinux/$repo/os/$arch": true,
+            "https://mirrors.dotsrc.org/archlinux/$repo/os/$arch": true
+        }
+    },
+    "nic": {
+        "dhcp": true,
+        "dns": null,
+        "gateway": null,
+        "iface": null,
+        "ip": null,
+        "type": "nm"
+    },
+    "no_pkg_lookups": false,
+    "offline": false,
+    "packages": [
+        "git",
+        "openssh",
+        "ansible"
+    ],
+    "profile": {
+        "path": "/usr/lib/python3.10/site-packages/archinstall/profiles/desktop.py"
+    },
+    "script": "guided",
+    "silent": false,
+    "sys-encoding": "UTF-8",
+    "sys-language": "en_DK",
+    "timezone": "Europe/Copenhagen",
+    "version": "2.5.1"
+}
