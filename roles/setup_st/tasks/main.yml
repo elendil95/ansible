@@ -14,3 +14,7 @@
     args:
       chdir: /home/{{ remote_regular_user }}/GithubRepos/st-build
     become: true
+  - name: cleanup
+    command: make clean
+    args:
+      chdir: /home/{{ remote_regular_user }}/GithubRepos/st-build

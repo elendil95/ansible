@@ -8,3 +8,8 @@
     args:
       chdir: /home/{{ remote_regular_user }}/GithubRepos/dmenu-build
     become: true
+
+  - name: cleanup
+    command: make clean
+    args:
+      chdir: /home/{{ remote_regular_user }}/GithubRepos/dmenu-build
