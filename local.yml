@@ -3,10 +3,11 @@
   connection: local
   become: true
   roles:
-    - { role: gather_facts, become: true }
+    - { role: gather_facts, become: false }
     - { role: install_packages, become: true }
     - { role: setup_aur, become: false }
-    # - { role: install_aur_packages, become: false }
+    - { role: install_aur_packages, become: false }
     - { role: clone_repos, become: false }
     - { role: setup_homedir, become: false }
     - { role: stow_config_files, become: false }
+    - { role: setup_dwm, become: false }
