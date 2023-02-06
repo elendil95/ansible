@@ -23,10 +23,6 @@
       path: /usr/bin/yay
     register: yay_location
 
-  - name: check if we already installed the ansible AUR extension
-    shell: pacman -Q | grep ansible-collection-kewlfft-aur | tr '\n' '\0'
-    register: aur_ext
-
   - name: Check existence of .bashrc
     stat: 
       path: /home/{{ remote_regular_user }}/.bashrc
