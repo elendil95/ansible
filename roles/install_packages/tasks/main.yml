@@ -31,6 +31,7 @@
         - zsh-completions 
         - zsh-lovers 
         - tig
+        - gitui
         - bluez
         - blueman
         - pinta
