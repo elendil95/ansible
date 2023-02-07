@@ -1,9 +1,14 @@
 ---
-  - name: refresh repos
+  - name: Refresh repos
     pacman:
       update_cache: true
 
-  - name: install very basic packages (vim, git, stow, ssh)
+  - name: Remove VIM (so we can install gvim)
+    pacman:
+      name: vim
+      state: absent
+
+  - name: Install base packages
     pacman:
       name: 
         - gvim
