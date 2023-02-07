@@ -8,3 +8,6 @@
 this could be fixed by installing the module from ansible galaxy beforehand w `ansible-galaxy collection install -r requirements.yml`
 
 you can clone repo and run playbook loocally with `ansible-playbook -K local.yml`
+
+
+after everything works, remember to add an extra role to remove the aur_builder user, as well as its config file in sudousers.d
