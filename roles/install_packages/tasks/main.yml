@@ -19,6 +19,8 @@
         - wget
         - ttf-ubuntu-font-family 
         - noto-fonts 
+        - noto-fonts-cjk
+        - noto-fonts-emoji
         - ttf-droid 
         - ttf-dejavu 
         - ttf-hack
