@@ -1,0 +1,20 @@
+---
+  - name: Create Git folder
+    file:
+      path: /home/{{ remote_regular_user }}/GithubRepos
+      state: directory
+      owner: "{{ remote_regular_user }}"
+      group: "{{ remote_regular_user_group }}"
+      mode: "0755"
+
+  - name: clone personal repositories
+    git:
+      repo: '{{item.repo}}'
+      dest: /home/{{ remote_regular_user }}/GithubRepos/{{item.folder_name}}
+      clone: yes
+    loop:
+    - {repo: https://github.com/elendil95/dotfiles.git, folder_name: dotfiles}
+    - {repo: https://github.com/elendil95/dwm-build.git, folder_name: dwm-build}
+    - {repo: https://github.com/elendil95/st-build.git, folder_name: st-build}
+    - {repo: https://github.com/elendil95/dmenu-build.git, folder_name: dmenu-build}
+    - {repo: https://github.com/elendil95/slstatus-build.git, folder_name: slstatus-build}

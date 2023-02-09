@@ -1,0 +1,15 @@
+---
+  - name: Install AUR packages
+    kewlfft.aur.aur:
+      use: yay
+      name:
+        - ttf-nerd-fonts-hack-complete-git
+        - urxvt-resize-font-git
+        - light-git
+        - ttf-ms-fonts
+  - name: Install AUR packages needed for DWM
+    kewlfft.aur.aur:
+      use: yay
+      name:
+        - pa-applet-git
+        - syncthing-gtk

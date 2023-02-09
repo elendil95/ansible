@@ -1,0 +1,15 @@
+---
+  - name: compile dmenu
+    command: make
+    args:
+      chdir: /home/{{ remote_regular_user }}/GithubRepos/dmenu-build
+  - name: Install dmenu
+    command: make install
+    args:
+      chdir: /home/{{ remote_regular_user }}/GithubRepos/dmenu-build
+    become: true
+
+  - name: cleanup
+    command: make clean
+    args:
+      chdir: /home/{{ remote_regular_user }}/GithubRepos/dmenu-build

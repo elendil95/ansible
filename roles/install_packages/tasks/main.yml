@@ -1,0 +1,81 @@
+---
+  - name: Refresh repos
+    pacman:
+      update_cache: true
+
+  - name: Remove VIM (so we can install gvim)
+    pacman:
+      name: vim
+      state: absent
+
+  - name: Install base packages
+    pacman:
+      name: 
+        - gvim
+        - git
+        - stow
+        - openssh
+        - curl
+        - wget
+        - ttf-ubuntu-font-family 
+        - noto-fonts 
+        - noto-fonts-cjk
+        - noto-fonts-emoji
+        - ttf-droid 
+        - ttf-dejavu 
+        - ttf-hack
+        - ttf-font-awesome
+        - xdg-user-dirs 
+        - xdg-user-dirs-gtk
+        - rxvt-unicode 
+        - urxvt-perls
+        - python-pip
+        - powerline-vim
+        - powerline-fonts
+        - zsh 
+        - zsh-doc 
+        - zsh-autosuggestions 
+        - zsh-completions 
+        - zsh-lovers 
+        - tig
+        - gitui
+        - meld
+        - bluez
+        - blueman
+        - pinta
+        - ristretto
+        - mpv
+        - vlc
+      state: latest
+      extra_args: --needed --noconfirm
+
+  - name: install packages needed by dwm
+    pacman:
+      name:
+        - python-pywal
+        - picom
+        - xsettingsd
+        - network-manager-applet
+        - redshift
+        - xorg-server-devel
+        - xorg-setxkbmap
+        - xorg-xinit
+        - xorg-xbacklight
+        - xorgproto
+        - light-locker
+        - gnome-keyring
+        - pamixer
+        - firefox
+        - keepassxc
+        - thunderbird
+        - thunar
+        - cmus
+        - calcurse
+        - gnome-calculator
+        - maim
+        - notify-osd
+        - trash-cli 
+        - atool 
+        - highlight
+      state: latest
+      extra_args: --needed --noconfirm

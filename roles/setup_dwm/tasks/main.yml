@@ -1,0 +1,59 @@
+---
+  - name: Copy dwm.desktop so it shows up in lightdm
+    copy:
+      src: dwm.desktop
+      dest: /usr/share/xsessions/
+      owner: root
+      group: root
+      mode: "0644"
+    become: true
+
+  - name: make .dwm folder
+    file: 
+      path: /home/{{ remote_regular_user }}/.dwm 
+      state: directory
+      owner: "{{ remote_regular_user }}"
+      group: "{{ remote_regular_user_group }}"
+      mode: "0755"
+
+  - name: copy over autostart config file
+    template: 
+      src: autostart.j2
+      dest: /home/{{ remote_regular_user }}/.dwm/autostart.sh
+      owner: "{{ remote_regular_user }}"
+      group: "{{ remote_regular_user_group }}"
+      mode: "0744"
+
+  - name: setup pywall for dwm
+    copy:
+      src: colors.Xresources
+      dest: /home/{{ remote_regular_user }}/.config/wal/templates/
+      owner: "{{ remote_regular_user }}"
+      group: "{{ remote_regular_user_group }}"
+      mode: "0644"
+
+  - name: pick a random wallpaper
+    shell: ls -l /home/{{ remote_regular_user }}/Pictures/std_wallpapers | awk 'NR>1 {print $NF}'
+    register: wallpapers   
+
+  - name: set a wallpaper with pywall at random
+    command: wal -i /home/{{ remote_regular_user }}/Pictures/std_wallpapers/{{wallpapers.stdout_lines|random}}
+    register: wal
+  - debug:
+      msg: "wal output: {{wal.stdout}}"
+
+  - name: Compile dwm
+    command: make
+    args:
+      chdir: /home/{{ remote_regular_user }}/GithubRepos/dwm-build
+
+  - name: install dwm
+    command: make install
+    args:
+      chdir: /home/{{ remote_regular_user }}/GithubRepos/dwm-build
+    become: true
+
+  - name: cleanup
+    command: make clean
+    args:
+      chdir: /home/{{ remote_regular_user }}/GithubRepos/dwm-build
