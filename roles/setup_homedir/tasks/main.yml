@@ -60,8 +60,17 @@
       owner: "{{ remote_regular_user }}"
       group: "{{ remote_regular_user_group }}"
       mode: "0644"
-      # directory_mode: true
-      # remote_src: true
-    # with_fileglob:
-      # - "*.png"
-      # - "*.jpg"
+
+  - name: Create an SSH key for remote regular user
+    ansible.builtin.user:
+      name: "{{ remote_regular_user }}" 
+      generate_ssh_key: yes
+      ssh_key_type: "rsa"
+      ssh_key_bits: 4096
+      ssh_key_file: .ssh/id_rsa
+
+  - name: set GIT username for remote regular user
+    command: git config --global user.name {{ git_username }}
+
+  - name: set GIT email for remote regular user
+    command: git config --global user.email {{ git_email }}
