@@ -5,8 +5,8 @@ The rice itself is based off suckless' dwm window manager, all relevant rice cob
 
 This ansible playbook assumes the presence of the following softare (at least right now):
 
-- An appropriate graphics driver for your system
-see [here](docs/linux_video_driver_checklist.md) in case of forgor💀
+- An appropriate graphics driver for your system.
+  See [here](docs/linux_video_driver_checklist.md) in case you forgor💀
 - Pulseaudio
 - pavucontrol
 - gvfs
