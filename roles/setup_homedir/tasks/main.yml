@@ -74,3 +74,12 @@
 
   - name: set GIT email for remote regular user
     command: git config --global user.email {{ git_email }}
+  
+  - name: set GIT Editor
+    command: git config core.editor {{ git_editor }}
+
+  - name: set GIT merge-tool
+    command: git config --global merge.tool {{ git_mergetool }}
+
+  - name: set GIT diff-tool
+    command: git config --global diff.tool {{ git_difftool }}
