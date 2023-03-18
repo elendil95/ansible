@@ -79,5 +79,6 @@
         - trash-cli 
         - atool 
         - highlight
+        - polkit-gnome
       state: latest
       extra_args: --needed --noconfirm
