@@ -12,7 +12,7 @@
     when: (not vim_link.stat.exists) or (not vim_link.stat.islnk)
 
   - name: stow picom
-    command: stow -v compton -t /home/{{ remote_regular_user }}
+    command: stow -v picom -t /home/{{ remote_regular_user }}
     args:
       chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
     # creates: /home/{{ remote_regular_user }}/.config/compton/compton.conf
