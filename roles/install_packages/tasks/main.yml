@@ -46,6 +46,7 @@
         - ristretto
         - mpv
         - vlc
+        - neofetch
       state: latest
       extra_args: --needed --noconfirm
 
@@ -66,6 +67,7 @@
         - gnome-keyring
         - pamixer
         - firefox
+        - feh
         - keepassxc
         - thunderbird
         - thunar
