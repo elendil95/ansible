@@ -48,6 +48,13 @@
         - vlc
         - neofetch
         - arandr
+        - net-tools
+        - networkmanager
+        - dhcpcd
+        - qbittorrent
+        - htop
+        - gparted
+        - rsync
       state: latest
       extra_args: --needed --noconfirm
 
