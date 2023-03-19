@@ -47,6 +47,7 @@
         - mpv
         - vlc
         - neofetch
+        - arandr
       state: latest
       extra_args: --needed --noconfirm
 
