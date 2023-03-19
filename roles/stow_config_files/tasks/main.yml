@@ -35,6 +35,11 @@
       chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
     # creates: /home/{{ remote_regular_user }}/.tmux.conf
 
+  - name: stow redshift
+    command: stow -v redshift -t /home/{{ remote_regular_user }}
+    args:
+      chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
+    # creates: /home/{{ remote_regular_user }}/.config/redshift/redshift.conf
  
   - import_tasks:
       file: setup-omzsh.yml
