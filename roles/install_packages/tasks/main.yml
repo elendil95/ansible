@@ -55,6 +55,11 @@
         - htop
         - gparted
         - rsync
+        - adwaita-cursors
+        - adwaita-icon-theme
+        - libadwaita
+        - adwaita-qt5
+        - adwaita-qt6
       state: latest
       extra_args: --needed --noconfirm
 
