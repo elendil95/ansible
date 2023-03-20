@@ -7,6 +7,7 @@
         - urxvt-resize-font-git
         - light-git
         - ttf-ms-fonts
+        - numix-icon-theme-git
   - name: Install AUR packages needed for DWM
     kewlfft.aur.aur:
       use: yay

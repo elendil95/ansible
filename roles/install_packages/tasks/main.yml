@@ -11,6 +11,16 @@
   - name: Install base packages
     pacman:
       name: 
+        - xorg-server
+        - xorg-xinit
+        - lightdm
+        - lightdm-gtk-greeter
+        - xfce4
+        - xfce4-goodies
+        - pulseaudio
+        - pavucontrol
+        - gvfs
+        - xarchiver
         - gvim
         - git
         - stow
@@ -51,10 +61,17 @@
         - net-tools
         - networkmanager
         - dhcpcd
+        - tlp
         - qbittorrent
         - htop
         - gparted
         - rsync
+        - adwaita-cursors
+        - adwaita-icon-theme
+        - libadwaita
+        - adwaita-qt5
+        - adwaita-qt6
+        - lm_sensors
       state: latest
       extra_args: --needed --noconfirm
 
