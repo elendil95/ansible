@@ -14,4 +14,4 @@
     - { role: setup_dmenu, become: false }
     - { role: setup_slstatus, become: false }
     - { role: setup_dwm, become: false }
-    - { role: setup_services, become: false }
+    - { role: setup_services, become: true }

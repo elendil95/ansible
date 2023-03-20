@@ -6,7 +6,7 @@
 
 - name: Enable NetworkManager
   ansible.builtin.service:
-    name: networkmanager
+    name: NetworkManager
     enabled: yes
 
 - name: Enable LightDM

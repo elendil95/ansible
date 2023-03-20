@@ -1,9 +1,15 @@
 ---
+- name: Check if zsh file exists
+  stat:
+    path: /home/{{ remote_regular_user }}/.oh-my-zsh
+  register: omzsh
+
 - name: run the script
   shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)" "" --unattended
   args:
     chdir: /home/{{ remote_regular_user }}
   register: omzsh_output
+  when: not omzsh.stat.exists
 
 - name: clone plugins
   git:
@@ -14,6 +20,7 @@
   - {repo: https://github.com/zsh-users/zsh-history-substring-search, folder_name: zsh-history-substring-search}
   - {repo: https://github.com/zsh-users/zsh-syntax-highlighting.git, folder_name: zsh-syntax-highlighting}
   - {repo: https://github.com/softmoth/zsh-vim-mode.git, folder_name: zsh-vim-mode}
+  when: not omzsh.stat.exists
 
 - name: copy zsh configs 
   copy:
@@ -26,6 +33,7 @@
   with_items:
     - aliases.zsh
     - example.zsh
+  when: not omzsh.stat.exists
 
 - name: Change shell for regular user to zsh
   command: chsh -s /usr/bin/zsh {{ remote_regular_user }}
@@ -35,6 +43,7 @@
   stat:
     path: /home/{{ remote_regular_user }}/.zshrc
   register: zsh_link
+  when: not omzsh.stat.exists
 
 - name: Delete existing bash files
   file:
@@ -44,8 +53,11 @@
     - /home/{{ remote_regular_user }}/.zshrc
     - /home/{{ remote_regular_user }}/.zshrc.pre-oh-my-zsh
   when: (zsh_link.stat.exists) and (not zsh_link.stat.islnk)
+  when: not omzsh.stat.exists
 
 - name: stow zshrc
   command: stow -v zsh -t /home/{{ remote_regular_user }}
   args:
     chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
+  when: not omzsh.stat.exists
+
