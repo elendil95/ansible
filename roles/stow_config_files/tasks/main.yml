@@ -15,31 +15,31 @@
     command: stow -v picom -t /home/{{ remote_regular_user }}
     args:
       chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
-    # creates: /home/{{ remote_regular_user }}/.config/compton/compton.conf
+      creates: /home/{{ remote_regular_user }}/.config/compton/compton.conf
 
   - name: stow mpv
     command: stow -v mpv -t /home/{{ remote_regular_user }}
     args:
       chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
-    # creates: /home/{{ remote_regular_user }}/.config/mpv/input.conf
+      creates: /home/{{ remote_regular_user }}/.config/mpv/input.conf
 
   - name: stow ranger
     command: stow -v ranger -t /home/{{ remote_regular_user }}
     args:
       chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
-    # creates: /home/{{ remote_regular_user }}/.config/ranger/rc.conf
+      creates: /home/{{ remote_regular_user }}/.config/ranger/rc.conf
 
   - name: stow tmux
     command: stow -v tmux -t /home/{{ remote_regular_user }}
     args:
       chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
-    # creates: /home/{{ remote_regular_user }}/.tmux.conf
+      creates: /home/{{ remote_regular_user }}/.tmux.conf
 
   - name: stow redshift
     command: stow -v redshift -t /home/{{ remote_regular_user }}
     args:
       chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
-    # creates: /home/{{ remote_regular_user }}/.config/redshift/redshift.conf
+      creates: /home/{{ remote_regular_user }}/.config/redshift/redshift.conf
  
   - import_tasks:
       file: setup-omzsh.yml
