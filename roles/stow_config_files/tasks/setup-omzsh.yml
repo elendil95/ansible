@@ -43,9 +43,8 @@
   stat:
     path: /home/{{ remote_regular_user }}/.zshrc
   register: zsh_link
-  when: not omzsh.stat.exists
 
-- name: Delete existing bash files
+- name: Delete existing zshrc files
   file:
     path: '{{ item }}'
     state: absent
@@ -53,7 +52,6 @@
     - /home/{{ remote_regular_user }}/.zshrc
     - /home/{{ remote_regular_user }}/.zshrc.pre-oh-my-zsh
   when: (zsh_link.stat.exists) and (not zsh_link.stat.islnk)
-  when: not omzsh.stat.exists
 
 - name: stow zshrc
   command: stow -v zsh -t /home/{{ remote_regular_user }}
