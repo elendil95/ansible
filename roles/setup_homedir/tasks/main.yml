@@ -19,7 +19,7 @@
     become: true
     ansible.builtin.lineinfile:
       path: /etc/sudoers.d/12-{{ remote_regular_user }}
-      line: '%wheel ALL=(ALL:ALL) NOPASSWD: /usr/bin/poweroff, /usr/bin/reboot, /usr/bin/shutdown, /usr/bin/systemctl'
+      line: '%wheel ALL=(ALL:ALL) NOPASSWD: /usr/bin/poweroff, /usr/bin/reboot, /usr/bin/shutdown, /usr/bin/systemctl suspend, /usr/bin/systemctl hibernate'
       create: yes
       validate: 'visudo -cf %s'
   - debug:  
