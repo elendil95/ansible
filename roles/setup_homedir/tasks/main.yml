@@ -43,7 +43,7 @@
   - name: Create folders in home if they don't exist
     command: xdg-user-dirs-update
     args:
-      creates: /home/{{ remote_regular_user }}/.icons
+      creates: /home/{{ remote_regular_user }}/Music
 
   - name: make wallpaper folder
     file: 
