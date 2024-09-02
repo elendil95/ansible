@@ -3,7 +3,6 @@
     kewlfft.aur.aur:
       use: yay
       name:
-        - ttf-nerd-fonts-hack-complete-git
         - urxvt-resize-font-git
         - light-git
         - ttf-ms-fonts
