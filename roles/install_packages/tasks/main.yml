@@ -41,7 +41,7 @@
         - rxvt-unicode 
         - urxvt-perls
         - python-pip
-        - powerline-vim
+        - vim-powerline
         - powerline-fonts
         - zsh 
         - zsh-doc 
