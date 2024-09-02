@@ -75,8 +75,6 @@
         - adwaita-cursors
         - adwaita-icon-theme
         - libadwaita
-        - adwaita-qt5
-        - adwaita-qt6
         - lm_sensors
         - file-roller
         - unrar
