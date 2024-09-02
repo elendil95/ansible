@@ -17,7 +17,6 @@
         - lightdm-gtk-greeter
         - xfce4
         - xfce4-goodies
-        - pulseaudio
         - pavucontrol
         - xarchiver
         - gvim
