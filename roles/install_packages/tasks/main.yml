@@ -125,3 +125,11 @@
         - polkit-gnome
       state: latest
       extra_args: --needed --noconfirm
+  - name: Gather package facts # Gets a list of crrently installed packages
+    package_facts:
+      manager: auto
+  - name: Install pulseaudio if no audio system is present.
+    package:
+      name: pulseaudio
+      state: present
+    when: "'pipewire-pulse' not in ansible_facts.packages and 'pulseaudio' not in ansible_facts.packages"
