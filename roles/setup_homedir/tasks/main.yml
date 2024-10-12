@@ -1,85 +1,81 @@
 ---
-  - name: Create bin home folder
-    file:
-      path: /home/{{ remote_regular_user }}/bin
-      state: directory
-      owner: "{{ remote_regular_user }}"
-      group: "{{ remote_regular_user_group }}"
-      mode: "0755"
+- name: Create bin home folder
+  ansible.builtin.file:
+    path: /home/{{ remote_regular_user }}/bin
+    state: directory
+    owner: "{{ remote_regular_user }}"
+    group: "{{ remote_regular_user_group }}"
+    mode: "0755"
 
-  - name: copy scripts to home/bin folder
-    copy:
-      src: /home/{{ remote_regular_user }}/GithubRepos/dotfiles/bin/
-      dest: /home/{{ remote_regular_user }}/bin/
-      owner: "{{ remote_regular_user }}"
-      group: "{{ remote_regular_user_group }}"
-      mode: "0700"
+- name: Copy scripts to home/bin folder
+  ansible.builtin.copy:
+    src: /home/{{ remote_regular_user }}/GithubRepos/dotfiles/bin/
+    dest: /home/{{ remote_regular_user }}/bin/
+    owner: "{{ remote_regular_user }}"
+    group: "{{ remote_regular_user_group }}"
+    mode: "0700"
 
-  - name: allow local user to run some commands without sudo pw, so that scripts will work
-    become: true
-    ansible.builtin.lineinfile:
-      path: /etc/sudoers.d/12-{{ remote_regular_user }}
-      line: '%wheel ALL=(ALL:ALL) NOPASSWD: /usr/bin/poweroff, /usr/bin/reboot, /usr/bin/shutdown, /usr/bin/systemctl suspend, /usr/bin/systemctl hibernate'
-      create: yes
-      validate: 'visudo -cf %s'
-  - debug:  
-        msg: "Created file is called 12-{{ remote_regular_user }}" 
+- name: Allow local user to run some commands without sudo pw, so that scripts will work
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers.d/12-{{ remote_regular_user }}
+    line: "%wheel ALL=(ALL:ALL) NOPASSWD: /usr/bin/poweroff, /usr/bin/reboot, /usr/bin/shutdown, /usr/bin/systemctl suspend, /usr/bin/systemctl hibernate"
+    create: true
+    validate: visudo -cf %s
+- ansible.builtin.debug:
+    msg: Created file is called 12-{{ remote_regular_user }}
 
-  - name: Delete existing bash files
-    file:
-      path: '{{ item }}'
-      state: absent
-    with_items:
-      - /home/{{ remote_regular_user }}/.bashrc
-      - /home/{{ remote_regular_user }}/.bash_profile
-    when: (bash_link.stat.exists) and (not bash_link.stat.islnk)
+- name: Delete existing bash files
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - /home/{{ remote_regular_user }}/.bashrc
+    - /home/{{ remote_regular_user }}/.bash_profile
+  when: (bash_link.stat.exists) and (not bash_link.stat.islnk)
 
-  - name: Delete existing .vimrc
-    file:
-      path: /home/{{ remote_regular_user }}/.vimrc
-      state: absent
-    when: (vim_link.stat.exists) and (not vim_link.stat.islnk)
-  
-  - name: Create folders in home if they don't exist
-    command: xdg-user-dirs-update
-    args:
-      creates: /home/{{ remote_regular_user }}/Music
+- name: Delete existing .vimrc
+  ansible.builtin.file:
+    path: /home/{{ remote_regular_user }}/.vimrc
+    state: absent
+  when: (vim_link.stat.exists) and (not vim_link.stat.islnk)
 
-  - name: make wallpaper folder
-    file: 
-      path: /home/{{ remote_regular_user }}/Pictures/std_wallpapers 
-      state: directory
-      owner: "{{ remote_regular_user }}"
-      group: "{{ remote_regular_user_group }}"
-      mode: "0700"
+- name: Create folders in home if they don't exist
+  ansible.builtin.command: xdg-user-dirs-update
+  args:
+    creates: /home/{{ remote_regular_user }}/Music
 
-  - name: copy over wallpapers
-    copy:
-      src: files/
-      dest: /home/{{ remote_regular_user }}/Pictures/std_wallpapers 
-      owner: "{{ remote_regular_user }}"
-      group: "{{ remote_regular_user_group }}"
-      mode: "0644"
+- name: Make wallpaper folder
+  ansible.builtin.file:
+    path: /home/{{ remote_regular_user }}/Pictures/std_wallpapers
+    state: directory
+    owner: "{{ remote_regular_user }}"
+    group: "{{ remote_regular_user_group }}"
+    mode: "0700"
 
-  - name: Create an SSH key for remote regular user
-    ansible.builtin.user:
-      name: "{{ remote_regular_user }}" 
-      generate_ssh_key: yes
-      ssh_key_type: "rsa"
-      ssh_key_bits: 4096
-      ssh_key_file: .ssh/id_rsa
+- name: Copy over wallpapers
+  ansible.builtin.copy:
+    src: files/
+    dest: /home/{{ remote_regular_user }}/Pictures/std_wallpapers
+    owner: "{{ remote_regular_user }}"
+    group: "{{ remote_regular_user_group }}"
+    mode: "0644"
 
-  - name: set GIT username for remote regular user
-    command: git config --global user.name {{ git_username }}
+- name: Create an SSH key for remote regular user
+  ansible.builtin.user:
+    name: "{{ remote_regular_user }}"
+    generate_ssh_key: true
+    ssh_key_type: rsa
+    ssh_key_bits: 4096
+    ssh_key_file: .ssh/id_rsa
 
-  - name: set GIT email for remote regular user
-    command: git config --global user.email {{ git_email }}
-  
-  - name: set GIT Editor
-    command: git config core.editor {{ git_editor }}
-
-  - name: set GIT merge-tool
-    command: git config --global merge.tool {{ git_mergetool }}
-
-  - name: set GIT diff-tool
-    command: git config --global diff.tool {{ git_difftool }}
+- name: Set GIT username for remote regular user
+  ansible.builtin.command: git config --global user.name {{ git_username }}
+- name: Set GIT email for remote regular user
+  ansible.builtin.command: git config --global user.email {{ git_email }}
+- name: Set GIT Editor
+  ansible.builtin.command: git config core.editor {{ git_editor }}
+- name: Set GIT merge-tool
+  ansible.builtin.command: git config --global merge.tool {{ git_mergetool }}
+- name: Set GIT diff-tool
+  ansible.builtin.command: git config --global diff.tool {{ git_difftool }}

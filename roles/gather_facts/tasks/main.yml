@@ -1,38 +1,38 @@
 ---
-  - name: get the non-root remote user
-    set_fact:
-      remote_regular_user: "{{ ansible_env.SUDO_USER or ansible_user_id }}"
+- name: Get the non-root remote user
+  ansible.builtin.set_fact:
+    remote_regular_user: "{{ ansible_env.SUDO_USER or ansible_user_id }}"
 
-  - name: get principal GID for remote regular user
-    set_fact:
-      remote_regular_gid: "{{ ansible_env.SUDO_GID or ansible_user_gid }}"
+- name: Get principal GID for remote regular user
+  ansible.builtin.set_fact:
+    remote_regular_gid: "{{ ansible_env.SUDO_GID or ansible_user_gid }}"
 
-  - name: Get the principal group for the non-root user
-    command: id -ng {{remote_regular_gid}}
-    register: main_group
-      # ignore_errors: True
-  - debug:
-      msg: "The following is the output of the group command: {{main_group}}"
-  
-  - name: set user group as a fact just in case
-    set_fact:
-      remote_regular_user_group: "{{ main_group.stdout }}"
+- name: Get the principal group for the non-root user
+  ansible.builtin.command: id -ng {{remote_regular_gid}}
+  register: main_group
+# ignore_errors: True
+- ansible.builtin.debug:
+    msg: "The following is the output of the group command: {{ main_group }}"
 
-  - name: check if yay is already installed.
-    stat:
-      path: /usr/bin/yay
-    register: yay_location
+- name: Set user group as a fact just in case
+  ansible.builtin.set_fact:
+    remote_regular_user_group: "{{ main_group.stdout }}"
 
-  - name: Check existence of .bashrc
-    stat: 
-      path: /home/{{ remote_regular_user }}/.bashrc
-    register: bash_link
-  - debug:
-      msg: "bashrc exists: Value is {{ bash_link.stat}}"
-          
-  - name: Check existance of .vimrc
-    stat: 
-      path: /home/{{ remote_regular_user }}/.vimrc
-    register: vim_link
-  - debug:
-      msg: "vimrc exists: Value is {{ vim_link.stat}}" 
+- name: Check if yay is already installed.
+  ansible.builtin.stat:
+    path: /usr/bin/yay
+  register: yay_location
+
+- name: Check existence of .bashrc
+  ansible.builtin.stat:
+    path: /home/{{ remote_regular_user }}/.bashrc
+  register: bash_link
+- ansible.builtin.debug:
+    msg: "bashrc exists: Value is {{ bash_link.stat }}"
+
+- name: Check existance of .vimrc
+  ansible.builtin.stat:
+    path: /home/{{ remote_regular_user }}/.vimrc
+  register: vim_link
+- ansible.builtin.debug:
+    msg: "vimrc exists: Value is {{ vim_link.stat }}"

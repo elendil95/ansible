@@ -1,20 +1,20 @@
 ---
-  - name: stow Xresources
-    command: stow -v Xresources -t /home/{{ remote_regular_user }}
-    args:
-      chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
+- name: Stow Xresources
+  ansible.builtin.command: stow -v Xresources -t /home/{{ remote_regular_user }}
+  args:
+    chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
     # creates: /home/{{ remote_regular_user }}/.Xresources
 
-  - name: compile ST
-    command: make
-    args:
-      chdir: /home/{{ remote_regular_user }}/GithubRepos/st-build
-  - name: Install ST
-    command: make install
-    args:
-      chdir: /home/{{ remote_regular_user }}/GithubRepos/st-build
-    become: true
-  - name: cleanup
-    command: make clean
-    args:
-      chdir: /home/{{ remote_regular_user }}/GithubRepos/st-build
+- name: Compile ST
+  ansible.builtin.command: make
+  args:
+    chdir: /home/{{ remote_regular_user }}/GithubRepos/st-build
+- name: Install ST
+  ansible.builtin.command: make install
+  args:
+    chdir: /home/{{ remote_regular_user }}/GithubRepos/st-build
+  become: true
+- name: Cleanup
+  ansible.builtin.command: make clean
+  args:
+    chdir: /home/{{ remote_regular_user }}/GithubRepos/st-build
