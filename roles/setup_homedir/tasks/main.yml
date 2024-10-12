@@ -15,13 +15,17 @@
     group: "{{ remote_regular_user_group }}"
     mode: "0700"
 
-- name: Allow local user to run some commands without sudo pw, so that scripts will work
+- name: Allow local user to run some commands without sudo pw, so that scripts will work # If the username is dynamic, im not sure we can use the copy module
   become: true
   ansible.builtin.lineinfile:
     path: /etc/sudoers.d/12-{{ remote_regular_user }}
     line: "%wheel ALL=(ALL:ALL) NOPASSWD: /usr/bin/poweroff, /usr/bin/reboot, /usr/bin/shutdown, /usr/bin/systemctl suspend, /usr/bin/systemctl hibernate"
     create: true
     validate: visudo -cf %s
+    owner: root
+    group: root
+    mode: '0440'
+
 - ansible.builtin.debug:
     msg: Created file is called 12-{{ remote_regular_user }}
 
@@ -69,13 +73,13 @@
     ssh_key_bits: 4096
     ssh_key_file: .ssh/id_rsa
 
-- name: Set GIT username for remote regular user
+- name: Set GIT username for remote regular user # noqa: command-instead-of-module
   ansible.builtin.command: git config --global user.name {{ git_username }}
-- name: Set GIT email for remote regular user
+- name: Set GIT email for remote regular user # noqa: command-instead-of-module
   ansible.builtin.command: git config --global user.email {{ git_email }}
-- name: Set GIT Editor
+- name: Set GIT Editor # noqa: command-instead-of-module
   ansible.builtin.command: git config core.editor {{ git_editor }}
-- name: Set GIT merge-tool
+- name: Set GIT merge-tool # noqa: command-instead-of-module
   ansible.builtin.command: git config --global merge.tool {{ git_mergetool }}
-- name: Set GIT diff-tool
+- name: Set GIT diff-tool # noqa: command-instead-of-module
   ansible.builtin.command: git config --global diff.tool {{ git_difftool }}
