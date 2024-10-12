@@ -3,12 +3,14 @@
   ansible.builtin.command: stow -v bash -t /home/{{ remote_regular_user }}
   args:
     chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
+    creates: /home/{{ remote_regular_user }}/.bashrc
   when: (not bash_link.stat.exists) or (not bash_link.stat.islnk)
 
 - name: Stow vimrc
   ansible.builtin.command: stow -v vim -t /home/{{ remote_regular_user }}
   args:
     chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
+    creates: /home/{{ remote_regular_user }}/.vimrc
   when: (not vim_link.stat.exists) or (not vim_link.stat.islnk)
 
 - name: Stow picom

@@ -3,23 +3,23 @@
   ansible.builtin.command: stow -v Xresources -t /home/{{ remote_regular_user }}
   args:
     chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
-  creates: /home/{{ remote_regular_user }}/.Xresources
+    creates: /home/{{ remote_regular_user }}/.Xresources
 
 - name: Compile ST
   ansible.builtin.command: make
   args:
     chdir: /home/{{ remote_regular_user }}/GithubRepos/st-build
-  creates: "st"
+    creates: "st"
 
 - name: Install ST
   ansible.builtin.command: make install
   args:
     chdir: /home/{{ remote_regular_user }}/GithubRepos/st-build
+    creates: "/usr/local/bin/st"
   become: true
-  creates: "/usr/local/bin/st"
 
 - name: Cleanup
   ansible.builtin.command: make clean
   args:
     chdir: /home/{{ remote_regular_user }}/GithubRepos/st-build
-  removes: "config.h"
+    removes: "config.h"
