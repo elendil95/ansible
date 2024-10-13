@@ -24,7 +24,7 @@
     group: "{{ remote_regular_user_group }}"
     mode: "0744"
 
-- name: Setup pywall for dwm
+- name: Setup custom pywall colorscheme for dwm
   ansible.builtin.copy:
     src: colors.Xresources
     dest: /home/{{ remote_regular_user }}/.config/wal/templates/
@@ -32,8 +32,11 @@
     group: "{{ remote_regular_user_group }}"
     mode: "0644"
 
+# This task is not standalone! it assumes that the wallpapers are already present, but *they* are only seeded in the 'setup homedir' role.
 - name: Pick a random wallpaper
-  ansible.builtin.shell: set -o pipefail ls -l /home/{{ remote_regular_user }}/Pictures/std_wallpapers | awk 'NR>1 {print $NF}'
+  ansible.builtin.shell:
+    cmd: set -o pipefail && ls -l /home/{{ remote_regular_user }}/Pictures/std_wallpapers | awk 'NR>1 {print $NF}'
+    executable: /usr/bin/bash
   register: wallpapers
   changed_when: true # Hardcore to true bc it does not matter
 
