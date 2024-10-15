@@ -52,17 +52,17 @@
   ansible.builtin.command: make
   args:
     chdir: /home/{{ remote_regular_user }}/GithubRepos/dwm-build
-    creates: "dwm"
+    creates: dwm
 
 - name: Install dwm
   ansible.builtin.command: make install
   args:
     chdir: /home/{{ remote_regular_user }}/GithubRepos/dwm-build
-    creates: "/usr/local/bin/dwm"
+    creates: /usr/local/bin/dwm
   become: true
 
 - name: Cleanup
   ansible.builtin.command: make clean
   args:
     chdir: /home/{{ remote_regular_user }}/GithubRepos/dwm-build
-    removes: "config.h"
+    removes: config.h

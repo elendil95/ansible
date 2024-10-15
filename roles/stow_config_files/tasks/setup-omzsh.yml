@@ -38,13 +38,13 @@
 
 # - name: Change shell for regular user to zsh # Missing changed_when statement
 #   ansible.builtin.command: chsh -s /usr/bin/zsh {{ remote_regular_user }}
-#   become: true 
+#   become: true
 
 - name: Change shell for regular user to zsh
   ansible.builtin.user:
-    name: {{ remote_regular_user }}
-    shell: "/usr/bin/zsh"
-  become: true 
+    name: "{{ remote_regular_user }}"
+    shell: /usr/bin/zsh
+  become: true
 
 - name: Check if zshrc exists
   ansible.builtin.stat:

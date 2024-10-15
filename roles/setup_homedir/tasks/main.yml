@@ -24,7 +24,7 @@
     validate: visudo -cf %s
     owner: root
     group: root
-    mode: '0440'
+    mode: "0440"
 
 - ansible.builtin.debug:
     msg: Created file is called 12-{{ remote_regular_user }}

@@ -16,7 +16,7 @@
     dest: /etc/sudoers.d/11-aur_builder
     owner: root
     group: root
-    mode: '0440'
+    mode: "0440"
 
 - name: Create temporary build folder
   ansible.builtin.file:
@@ -50,7 +50,7 @@
   ansible.builtin.command: makepkg -i --noconfirm
   args:
     chdir: /home/aur_builder/.tmp/yay
-    creates: "/usr/bin/yay"
+    creates: /usr/bin/yay
   become: true
   become_user: aur_builder
   when: not yay_location.stat.exists
