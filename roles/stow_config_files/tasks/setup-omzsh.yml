@@ -58,8 +58,9 @@
   ansible.builtin.command: stow -v zsh -t /home/{{ remote_regular_user }}
   args:
     chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
-    creates: /home/{{ remote_regular_user }}/.oh-my-zsh/oh-my-zsh.sh
+    creates: /home/{{ remote_regular_user }}/.zshrc
   when: not omzsh.stat.exists
+
 - name: Change shell for regular user to zsh
   ansible.builtin.user:
     name: "{{ remote_regular_user }}"
