@@ -43,5 +43,6 @@
     chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
     creates: /home/{{ remote_regular_user }}/.config/redshift/redshift.conf
 
-- ansible.builtin.import_tasks:
+- name: Run OMZ tasklist
+  ansible.builtin.import_tasks:
     file: setup-omzsh.yml

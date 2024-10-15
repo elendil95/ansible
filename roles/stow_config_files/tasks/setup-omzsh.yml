@@ -9,9 +9,9 @@
   args:
     chdir: /home/{{ remote_regular_user }}
   register: omzsh_output
-  when: not omzsh.stat.exists
+  when: not omzsh.stat.exists # Missing changed_when statement
 
-- name: Clone plugins
+- name: Clone plugins # noqa: latest
   ansible.builtin.git:
     repo: "{{ item.repo }}"
     dest: /home/{{ remote_regular_user }}/.oh-my-zsh/custom/plugins/{{ item.folder_name }}
@@ -35,9 +35,9 @@
     - example.zsh
   when: not omzsh.stat.exists
 
-- name: Change shell for regular user to zsh
+- name: Change shell for regular user to zsh # Missing changed_when statement
   ansible.builtin.command: chsh -s /usr/bin/zsh {{ remote_regular_user }}
-  become: true
+  become: true 
 
 - name: Check if zshrc exists
   ansible.builtin.stat:
@@ -57,4 +57,5 @@
   ansible.builtin.command: stow -v zsh -t /home/{{ remote_regular_user }}
   args:
     chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
+    creates: /home/{{ remote_regular_user }}/.oh-my-zsh/oh-my-zsh.sh
   when: not omzsh.stat.exists
