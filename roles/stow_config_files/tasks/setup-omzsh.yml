@@ -59,7 +59,6 @@
   args:
     chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
     creates: /home/{{ remote_regular_user }}/.zshrc
-  when: not omzsh.stat.exists
 
 - name: Change shell for regular user to zsh
   ansible.builtin.user:
