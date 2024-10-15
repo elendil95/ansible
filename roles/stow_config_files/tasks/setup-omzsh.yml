@@ -40,12 +40,6 @@
 #   ansible.builtin.command: chsh -s /usr/bin/zsh {{ remote_regular_user }}
 #   become: true
 
-- name: Change shell for regular user to zsh
-  ansible.builtin.user:
-    name: "{{ remote_regular_user }}"
-    shell: /usr/bin/zsh
-  become: true
-
 - name: Check if zshrc exists
   ansible.builtin.stat:
     path: /home/{{ remote_regular_user }}/.zshrc
@@ -66,3 +60,8 @@
     chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
     creates: /home/{{ remote_regular_user }}/.oh-my-zsh/oh-my-zsh.sh
   when: not omzsh.stat.exists
+- name: Change shell for regular user to zsh
+  ansible.builtin.user:
+    name: "{{ remote_regular_user }}"
+    shell: /usr/bin/zsh
+  become: true
