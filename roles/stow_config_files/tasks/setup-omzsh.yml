@@ -9,7 +9,8 @@
   args:
     chdir: /home/{{ remote_regular_user }}
   register: omzsh_output
-  when: not omzsh.stat.exists # Missing changed_when statement
+  when: not omzsh.stat.exists
+  changed_when: not omzsh.stat.exists
 
 - name: Clone plugins # noqa: latest
   ansible.builtin.git:
@@ -35,8 +36,14 @@
     - example.zsh
   when: not omzsh.stat.exists
 
+# - name: Change shell for regular user to zsh # Missing changed_when statement
+#   ansible.builtin.command: chsh -s /usr/bin/zsh {{ remote_regular_user }}
+#   become: true 
+
 - name: Change shell for regular user to zsh # Missing changed_when statement
-  ansible.builtin.command: chsh -s /usr/bin/zsh {{ remote_regular_user }}
+  ansible.builtin.user:
+    name: {{ remote_regular_user }}
+    shell: "/usr/bin/zsh"
   become: true 
 
 - name: Check if zshrc exists
