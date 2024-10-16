@@ -30,7 +30,7 @@ Then:
 
 2) Run `ansible-galaxy collection install -r requirements.yml` to install the ansible plugin for AUR
 
-3) Run `ansible-playbook -K local.yml`, you will be prompted for a sudo password.
+3) Run `ansible-playbook -K playbook-main.yml`, you will be prompted for a sudo password.
 
 Alternatively, you can use ansible pull with the following: `ansible-pull -U <repo> -C <branch> -K`,
 but it has some kinks to work out still.
