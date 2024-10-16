@@ -1,59 +1,68 @@
 ---
-  - name: Copy dwm.desktop so it shows up in lightdm
-    copy:
-      src: dwm.desktop
-      dest: /usr/share/xsessions/
-      owner: root
-      group: root
-      mode: "0644"
-    become: true
+- name: Copy dwm.desktop so it shows up in lightdm
+  ansible.builtin.copy:
+    src: dwm.desktop
+    dest: /usr/share/xsessions/
+    owner: root
+    group: root
+    mode: "0644"
+  become: true
 
-  - name: make .dwm folder
-    file: 
-      path: /home/{{ remote_regular_user }}/.dwm 
-      state: directory
-      owner: "{{ remote_regular_user }}"
-      group: "{{ remote_regular_user_group }}"
-      mode: "0755"
+- name: Make .dwm folder
+  ansible.builtin.file:
+    path: /home/{{ remote_regular_user }}/.dwm
+    state: directory
+    owner: "{{ remote_regular_user }}"
+    group: "{{ remote_regular_user_group }}"
+    mode: "0755"
 
-  - name: copy over autostart config file
-    template: 
-      src: autostart.j2
-      dest: /home/{{ remote_regular_user }}/.dwm/autostart.sh
-      owner: "{{ remote_regular_user }}"
-      group: "{{ remote_regular_user_group }}"
-      mode: "0744"
+- name: Copy over autostart config file
+  ansible.builtin.template:
+    src: autostart.j2
+    dest: /home/{{ remote_regular_user }}/.dwm/autostart.sh
+    owner: "{{ remote_regular_user }}"
+    group: "{{ remote_regular_user_group }}"
+    mode: "0744"
 
-  - name: setup pywall for dwm
-    copy:
-      src: colors.Xresources
-      dest: /home/{{ remote_regular_user }}/.config/wal/templates/
-      owner: "{{ remote_regular_user }}"
-      group: "{{ remote_regular_user_group }}"
-      mode: "0644"
+- name: Setup custom pywall colorscheme for dwm
+  ansible.builtin.copy:
+    src: colors.Xresources
+    dest: /home/{{ remote_regular_user }}/.config/wal/templates/
+    owner: "{{ remote_regular_user }}"
+    group: "{{ remote_regular_user_group }}"
+    mode: "0644"
 
-  - name: pick a random wallpaper
-    shell: ls -l /home/{{ remote_regular_user }}/Pictures/std_wallpapers | awk 'NR>1 {print $NF}'
-    register: wallpapers   
+# This task is not standalone! it assumes that the wallpapers are already present, but *they* are only seeded in the 'setup homedir' role.
+- name: Pick a random wallpaper
+  ansible.builtin.shell:
+    cmd: set -o pipefail && ls -l /home/{{ remote_regular_user }}/Pictures/std_wallpapers | awk 'NR>1 {print $NF}'
+    executable: /usr/bin/bash
+  register: wallpapers
+  changed_when: true # Hardcore to true bc it does not matter
 
-  - name: set a wallpaper with pywall at random
-    command: wal -i /home/{{ remote_regular_user }}/Pictures/std_wallpapers/{{wallpapers.stdout_lines|random}}
-    register: wal
-  - debug:
-      msg: "wal output: {{wal.stdout}}"
+- name: Set a wallpaper with pywall at random
+  ansible.builtin.command: wal -i /home/{{ remote_regular_user }}/Pictures/std_wallpapers/{{ wallpapers.stdout_lines | random }}
+  register: wal
+  changed_when: true # Hardcore to true bc it does not matter
 
-  - name: Compile dwm
-    command: make
-    args:
-      chdir: /home/{{ remote_regular_user }}/GithubRepos/dwm-build
+- ansible.builtin.debug:
+    msg: "wal output: {{ wal.stdout }}"
 
-  - name: install dwm
-    command: make install
-    args:
-      chdir: /home/{{ remote_regular_user }}/GithubRepos/dwm-build
-    become: true
+- name: Compile dwm
+  ansible.builtin.command: make
+  args:
+    chdir: /home/{{ remote_regular_user }}/GithubRepos/dwm-build
+    creates: dwm
 
-  - name: cleanup
-    command: make clean
-    args:
-      chdir: /home/{{ remote_regular_user }}/GithubRepos/dwm-build
+- name: Install dwm
+  ansible.builtin.command: make install
+  args:
+    chdir: /home/{{ remote_regular_user }}/GithubRepos/dwm-build
+    creates: /usr/local/bin/dwm
+  become: true
+
+- name: Cleanup
+  ansible.builtin.command: make clean
+  args:
+    chdir: /home/{{ remote_regular_user }}/GithubRepos/dwm-build
+    removes: config.h

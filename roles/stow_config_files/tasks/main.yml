@@ -1,45 +1,48 @@
 ---
-  - name: stow bashrc
-    shell: stow -v bash -t /home/{{ remote_regular_user }}
-    args:
-      chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
-    when: (not bash_link.stat.exists) or (not bash_link.stat.islnk)
+- name: Stow bashrc
+  ansible.builtin.command: stow -v bash -t /home/{{ remote_regular_user }}
+  args:
+    chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
+    creates: /home/{{ remote_regular_user }}/.bashrc
+  when: (not bash_link.stat.exists) or (not bash_link.stat.islnk)
 
-  - name: stow vimrc
-    shell: stow -v vim -t /home/{{ remote_regular_user }}
-    args:
-      chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
-    when: (not vim_link.stat.exists) or (not vim_link.stat.islnk)
+- name: Stow vimrc
+  ansible.builtin.command: stow -v vim -t /home/{{ remote_regular_user }}
+  args:
+    chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
+    creates: /home/{{ remote_regular_user }}/.vimrc
+  when: (not vim_link.stat.exists) or (not vim_link.stat.islnk)
 
-  - name: stow picom
-    command: stow -v picom -t /home/{{ remote_regular_user }}
-    args:
-      chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
-      creates: /home/{{ remote_regular_user }}/.config/compton/compton.conf
+- name: Stow picom
+  ansible.builtin.command: stow -v picom -t /home/{{ remote_regular_user }}
+  args:
+    chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
+    creates: /home/{{ remote_regular_user }}/.config/compton/compton.conf
 
-  - name: stow mpv
-    command: stow -v mpv -t /home/{{ remote_regular_user }}
-    args:
-      chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
-      creates: /home/{{ remote_regular_user }}/.config/mpv/input.conf
+- name: Stow mpv
+  ansible.builtin.command: stow -v mpv -t /home/{{ remote_regular_user }}
+  args:
+    chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
+    creates: /home/{{ remote_regular_user }}/.config/mpv/input.conf
 
-  - name: stow ranger
-    command: stow -v ranger -t /home/{{ remote_regular_user }}
-    args:
-      chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
-      creates: /home/{{ remote_regular_user }}/.config/ranger/rc.conf
+- name: Stow ranger
+  ansible.builtin.command: stow -v ranger -t /home/{{ remote_regular_user }}
+  args:
+    chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
+    creates: /home/{{ remote_regular_user }}/.config/ranger/rc.conf
 
-  - name: stow tmux
-    command: stow -v tmux -t /home/{{ remote_regular_user }}
-    args:
-      chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
-      creates: /home/{{ remote_regular_user }}/.tmux.conf
+- name: Stow tmux
+  ansible.builtin.command: stow -v tmux -t /home/{{ remote_regular_user }}
+  args:
+    chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
+    creates: /home/{{ remote_regular_user }}/.tmux.conf
 
-  - name: stow redshift
-    command: stow -v redshift -t /home/{{ remote_regular_user }}
-    args:
-      chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
-      creates: /home/{{ remote_regular_user }}/.config/redshift/redshift.conf
- 
-  - import_tasks:
-      file: setup-omzsh.yml
+- name: Stow redshift
+  ansible.builtin.command: stow -v redshift -t /home/{{ remote_regular_user }}
+  args:
+    chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
+    creates: /home/{{ remote_regular_user }}/.config/redshift/redshift.conf
+
+- name: Run OMZ tasklist
+  ansible.builtin.import_tasks:
+    file: setup-omzsh.yml

@@ -2,34 +2,34 @@
 - name: Enable DHCP service
   ansible.builtin.service:
     name: dhcpcd
-    enabled: yes
+    enabled: true
 
 - name: Enable NetworkManager
   ansible.builtin.service:
     name: NetworkManager
-    enabled: yes
+    enabled: true
 
 - name: Enable LightDM
   ansible.builtin.service:
     name: lightdm
-    enabled: yes
+    enabled: true
 
 - name: Enable TLP
   ansible.builtin.service:
     name: tlp
-    enabled: yes
+    enabled: true
 
 - name: Enable Bluetooth
   ansible.builtin.service:
     name: bluetooth
-    enabled: yes
+    enabled: true
 
 - name: Enable lm_sensors
   ansible.builtin.service:
     name: lm_sensors
-    enabled: yes
+    enabled: true
 
 - name: Enable Polkit
   ansible.builtin.service:
     name: polkit
-    enabled: yes
+    enabled: true

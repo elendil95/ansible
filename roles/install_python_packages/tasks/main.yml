@@ -1,5 +1,5 @@
 ---
-  - name: Install Python packages
-    ansible.builtin.pip:
-      name:
-        - amongus
+- name: Install Python packages
+  ansible.builtin.pip:
+    name:
+      - amongus

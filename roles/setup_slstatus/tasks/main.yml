@@ -1,16 +1,19 @@
 ---
-  - name: compile slstatus
-    command: make
-    args:
-      chdir: /home/{{ remote_regular_user }}/GithubRepos/slstatus-build
+- name: Compile slstatus
+  ansible.builtin.command: make
+  args:
+    chdir: /home/{{ remote_regular_user }}/GithubRepos/slstatus-build
+    creates: slstatus
 
-  - name: Install slstatus
-    command: make install
-    args:
-      chdir: /home/{{ remote_regular_user }}/GithubRepos/slstatus-build
-    become: true
+- name: Install slstatus
+  ansible.builtin.command: make install
+  args:
+    chdir: /home/{{ remote_regular_user }}/GithubRepos/slstatus-build
+    creates: /usr/local/bin/slstatus
+  become: true
 
-  - name: compile slstatus
-    command: make
-    args:
-      chdir: /home/{{ remote_regular_user }}/GithubRepos/slstatus-build
+- name: Cleanup
+  ansible.builtin.command: make clean
+  args:
+    chdir: /home/{{ remote_regular_user }}/GithubRepos/slstatus-build
+    removes: config.h

@@ -1,134 +1,134 @@
 ---
-  - name: Refresh repos
-    pacman:
-      update_cache: true
+- name: Refresh repos
+  community.general.pacman:
+    update_cache: true
 
-  - name: Remove VIM (so we can install gvim)
-    pacman:
-      name: vim
-      state: absent
+- name: Remove VIM (so we can install gvim)
+  community.general.pacman:
+    name: vim
+    state: absent
 
-  - name: Install base packages
-    pacman:
-      name: 
-        - xorg-server
-        - xorg-xinit
-        - lightdm
-        - lightdm-gtk-greeter
-        - xfce4
-        - xfce4-goodies
-        - pavucontrol
-        - xarchiver
-        - gvim
-        - git
-        - stow
-        - openssh
-        - curl
-        - wget
-        - man-pages
-        - ttf-ubuntu-font-family 
-        - noto-fonts 
-        - noto-fonts-cjk
-        - noto-fonts-emoji
-        - ttf-droid 
-        - ttf-dejavu 
-        - ttf-hack
-        - ttf-hack-nerd
-        - ttf-font-awesome
-        - xdg-user-dirs 
-        - xdg-user-dirs-gtk
-        - rxvt-unicode 
-        - urxvt-perls
-        - python-pip
-        - vim-powerline
-        - powerline-fonts
-        - zsh 
-        - zsh-doc 
-        - zsh-autosuggestions 
-        - zsh-completions 
-        - zsh-lovers 
-        - tig
-        - gitui
-        - meld
-        - bluez
-        - blueman
-        - pinta
-        - ristretto
-        - mpv
-        - vlc
-        - neofetch
-        - arandr
-        - net-tools
-        - networkmanager
-        - dhcpcd
-        - tlp
-        - qbittorrent
-        - htop
-        - gparted
-        - btrfs-progs
-        - exfatprogs
-        - f2fs-tools
-        - gpart
-        - mtools
-        - rsync
-        - adwaita-cursors
-        - adwaita-icon-theme
-        - libadwaita
-        - lm_sensors
-        - file-roller
-        - unrar
-        - p7zip
-        - zip
-        - unzip
-        - lrzip
-        - squashfs-tools
-        - pv
-      state: latest
-      extra_args: --needed --noconfirm
+- name: Install base packages
+  community.general.pacman:
+    name:
+      - xorg-server
+      - xorg-xinit
+      - lightdm
+      - lightdm-gtk-greeter
+      - xfce4
+      - xfce4-goodies
+      - pavucontrol
+      - xarchiver
+      - gvim
+      - git
+      - stow
+      - openssh
+      - curl
+      - wget
+      - man-pages
+      - ttf-ubuntu-font-family
+      - noto-fonts
+      - noto-fonts-cjk
+      - noto-fonts-emoji
+      - ttf-droid
+      - ttf-dejavu
+      - ttf-hack
+      - ttf-hack-nerd
+      - ttf-font-awesome
+      - xdg-user-dirs
+      - xdg-user-dirs-gtk
+      - rxvt-unicode
+      - urxvt-perls
+      - python-pip
+      - vim-powerline
+      - powerline-fonts
+      - zsh
+      - zsh-doc
+      - zsh-autosuggestions
+      - zsh-completions
+      - zsh-lovers
+      - tig
+      - gitui
+      - meld
+      - bluez
+      - blueman
+      - pinta
+      - ristretto
+      - mpv
+      - vlc
+      - neofetch
+      - arandr
+      - net-tools
+      - networkmanager
+      - dhcpcd
+      - tlp
+      - qbittorrent
+      - htop
+      - gparted
+      - btrfs-progs
+      - exfatprogs
+      - f2fs-tools
+      - gpart
+      - mtools
+      - rsync
+      - adwaita-cursors
+      - adwaita-icon-theme
+      - libadwaita
+      - lm_sensors
+      - file-roller
+      - unrar
+      - p7zip
+      - zip
+      - unzip
+      - lrzip
+      - squashfs-tools
+      - pv
+    state: latest
+    extra_args: --needed --noconfirm
 
-  - name: install packages needed by dwm
-    pacman:
-      name:
-        - python-pywal
-        - picom
-        - xsettingsd
-        - network-manager-applet
-        - redshift
-        - xorg-server-devel
-        - xorg-setxkbmap
-        - xorg-xinit
-        - xorg-xbacklight
-        - xorgproto
-        - xorg-xkill
-        - light-locker
-        - gnome-keyring
-        - pamixer
-        - firefox
-        - feh
-        - keepassxc
-        - thunderbird
-        - thunar
-        - thunar-archive-plugin
-        - gvfs
-        - thunar-media-tags-plugin
-        - thunar-volman
-        - tumbler
-        - cmus
-        - calcurse
-        - gnome-calculator
-        - maim
-        - notify-osd
-        - trash-cli 
-        - atool 
-        - highlight
-        - polkit-gnome
-      state: latest
-      extra_args: --needed --noconfirm
-  - name: Gather package facts # Gets a list of crrently installed packages
-    package_facts:
-      manager: auto
-  - name: Install pulseaudio if no audio system is present.
-    package:
-      name: pulseaudio
-      state: present
-    when: "'pipewire-pulse' not in ansible_facts.packages and 'pulseaudio' not in ansible_facts.packages"
+- name: Install packages needed by dwm
+  community.general.pacman:
+    name:
+      - python-pywal
+      - picom
+      - xsettingsd
+      - network-manager-applet
+      - redshift
+      - xorg-server-devel
+      - xorg-setxkbmap
+      - xorg-xinit
+      - xorg-xbacklight
+      - xorgproto
+      - xorg-xkill
+      - light-locker
+      - gnome-keyring
+      - pamixer
+      - firefox
+      - feh
+      - keepassxc
+      - thunderbird
+      - thunar
+      - thunar-archive-plugin
+      - gvfs
+      - thunar-media-tags-plugin
+      - thunar-volman
+      - tumbler
+      - cmus
+      - calcurse
+      - gnome-calculator
+      - maim
+      - notify-osd
+      - trash-cli
+      - atool
+      - highlight
+      - polkit-gnome
+    state: latest
+    extra_args: --needed --noconfirm
+- name: Gather package facts # Gets a list of crrently installed packages
+  ansible.builtin.package_facts:
+    manager: auto
+- name: Install pulseaudio if no audio system is present.
+  ansible.builtin.package:
+    name: pulseaudio
+    state: present
+  when: "'pipewire-pulse' not in ansible_facts.packages and 'pulseaudio' not in ansible_facts.packages"

@@ -1,15 +1,19 @@
 ---
-  - name: compile dmenu
-    command: make
-    args:
-      chdir: /home/{{ remote_regular_user }}/GithubRepos/dmenu-build
-  - name: Install dmenu
-    command: make install
-    args:
-      chdir: /home/{{ remote_regular_user }}/GithubRepos/dmenu-build
-    become: true
+- name: Compile dmenu
+  ansible.builtin.command: make
+  args:
+    chdir: /home/{{ remote_regular_user }}/GithubRepos/dmenu-build
+    creates: dmenu
 
-  - name: cleanup
-    command: make clean
-    args:
-      chdir: /home/{{ remote_regular_user }}/GithubRepos/dmenu-build
+- name: Install dmenu
+  ansible.builtin.command: make install
+  args:
+    chdir: /home/{{ remote_regular_user }}/GithubRepos/dmenu-build
+    creates: /usr/local/bin/dmenu
+  become: true
+
+- name: Cleanup
+  ansible.builtin.command: make clean
+  args:
+    chdir: /home/{{ remote_regular_user }}/GithubRepos/dmenu-build
+    removes: config.h
