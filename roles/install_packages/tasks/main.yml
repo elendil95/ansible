@@ -14,7 +14,7 @@
       - xorg-server
       - xorg-xinit
       - lightdm
-      - lightdm-gtk-greeter
+      - lightdm-slick-greeter
       - xfce4
       - xfce4-goodies
       - pavucontrol

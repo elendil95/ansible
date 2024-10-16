@@ -7,17 +7,7 @@ This ansible playbook assumes the presence of the following softare (at least ri
 
 - An appropriate graphics driver for your system.
     See [here](/doc/linux_video_driver_checklist.md) in case you forgor 💀
-- Pulseaudio
-- pavucontrol
-- gvfs
-- xarchiver
-- NetworkManager
-- xfce4
-- xfce4-goodies
-- lightdm
-- lightdm-gtk-greeter
-- xorg-server
-- xorg-xinit
+- git
 - ansible
 
 ## How to run:
