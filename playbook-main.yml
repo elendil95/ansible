@@ -1,5 +1,6 @@
 ---
-- hosts: localhost
+- name: Setup up base Arch system
+  hosts: localhost
   connection: local
   become: true
   roles:
@@ -15,3 +16,4 @@
     - { role: setup_slstatus, become: false }
     - { role: setup_dwm, become: false }
     - { role: setup_services, become: true }
+    - { role: cleanup, become: true }

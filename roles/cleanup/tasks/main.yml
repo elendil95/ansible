@@ -1,0 +1,10 @@
+---
+- name: Remove aur_builder user
+  ansible.builtin.user:
+    name: aur_builder
+    state: absent
+    remove: true
+- name: Remove aur_builder sudo access permissions
+  ansible.builtin.file:
+    path: /etc/sudoers.d/11-aur_builder
+    state: absent
