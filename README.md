@@ -10,6 +10,8 @@ This ansible playbook assumes the presence of the following softare (at least ri
 - git
 - ansible
 
+Additionally, we assume you have logged in with your user account (i.e not root). and that this user account is your main personal one that you will use.
+
 ## How to run:
 
 Once in a new arch install, log in as a normal user.
