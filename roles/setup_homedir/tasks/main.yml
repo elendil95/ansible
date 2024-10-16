@@ -81,6 +81,7 @@
     owner: root
     group: root
     mode: '0644'
+  become: true
 
 - name: Copy over Lock Screen config file
   ansible.builtin.copy:
@@ -89,6 +90,7 @@
     owner: root
     group: root
     mode: "0644"
+  become: true
 
 - name: Create an SSH key for remote regular user
   ansible.builtin.user:
