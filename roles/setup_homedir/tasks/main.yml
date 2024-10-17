@@ -65,6 +65,33 @@
     group: "{{ remote_regular_user_group }}"
     mode: "0644"
 
+- name: Copy over Lock Screen background image
+  ansible.builtin.copy:
+    src: files/meduka_lockscreen.jpg
+    dest: /usr/share/backgrounds/meduka_lockscreen.jpg
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Switch LightDM to use 'Slick' greeter
+  ansible.builtin.lineinfile:
+    path: /etc/lightdm/lightdm.conf
+    regexp: '^#greeter-session='
+    line: greeter-session=lightdm-slick-greeter
+    owner: root
+    group: root
+    mode: '0644'
+  become: true
+
+- name: Copy over Lock Screen config file
+  ansible.builtin.copy:
+    src: files/slick-greeter.conf
+    dest: /etc/lightdm/slick-greeter.conf
+    owner: root
+    group: root
+    mode: "0644"
+  become: true
+
 - name: Create an SSH key for remote regular user
   ansible.builtin.user:
     name: "{{ remote_regular_user }}"
