@@ -5,12 +5,17 @@
   become: true
 
   tasks:
+    # - name: Enable 32-bit libraries
+    #   ansible.builtin.blockinfile:
+    #     path: /etc/pacman.conf
+    #     block: |
+    #       [multilib]
+    #       Include = /etc/pacman.d/mirrorlist
     - name: Enable 32-bit libraries
-      ansible.builtin.blockinfile:
+      ansible.builtin.replace:
         path: /etc/pacman.conf
-        block: |
-          [multilib]
-          Include = /etc/pacman.d/mirrorlist
+        regexp: '(?m)^#\S*(\[multilib\]\n?)#\S*(Include = /etc/pacman\.d/mirrorlist)$'
+        replace: '\g<1>\g<2>'
 
     - name: Update the repos
       community.general.pacman:
