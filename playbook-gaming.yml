@@ -1,0 +1,119 @@
+---
+- name: Install Software related to gaming, and a bunch of FOSS games.
+  hosts: localhost
+  connection: local
+  become: true
+
+  tasks:
+    - name: "Install gaming software (from official repos)"
+      community.general.pacman:
+        name:
+          - steam
+          - lutris
+          - mangohud
+        state: latest
+        extra_args: --needed --noconfirm
+
+    - name: Enable 32-bit libraries
+      ansible.builtin.lineinfile:
+        path: /etc/pacman.conf
+        regexp: '^{{ item }}$'
+        line: '#{{ item }}'
+      loop:
+        - \[multilib\]
+        - Include = /etc/pacman.d/mirrorlist
+
+    - name: Update the repos
+      community.general.pacman:
+        update_cache: true
+
+    - name: Install wine # This is a separate task bc all the other wine bullshit is installed as a dependency.
+      community.general.pacman:
+        name:
+          - wine-staging
+          - winetricks
+        state: latest
+        extra_args: --needed --noconfirm
+
+    - name: Install wine and lutris dependencies
+      community.general.pacman:
+        name:
+          - alsa-lib
+          - alsa-plugins
+          - fluidsynth # MIDI support
+          # - gamemode
+          - giflib
+          - gnutls
+          - gst-plugins-base-libs
+          - gtk3
+          - innoextract # Extract Inno Setup installers
+          - lib32-alsa-lib
+          - lib32-alsa-plugins
+          # - lib32-gamemode
+          - lib32-giflib
+          - lib32-gnutls
+          - lib32-gst-plugins-base-libs
+          - lib32-gtk3
+          - lib32-libpulse
+          - lib32-libva
+          - lib32-libxcomposite
+          - lib32-mangohud
+          - lib32-ocl-icd
+          - lib32-sdl2
+          - lib32-sqlite
+          - lib32-v4l-utils
+          - lib32-vkd3d # DirectX 12 support
+          - lib32-vulkan-icd-loader # Vulkan support
+          - libayatana-appindicator # tray icon support
+          - libpulse
+          - libva
+          - libxcomposite
+          - ocl-icd
+          - python-protobuf # Battle.net support
+          - sdl2
+          - sqlite
+          - v4l-utils
+          - vkd3d # DirectX 12 support
+          - vulkan-icd-loader # Vulkan support
+          - vulkan-tools # Vulkan support
+        state: latest
+        reason: dependency
+        extra_args: --needed --noconfirm
+
+    - name: Install gaming software (from the AUR)
+      kewlfft.aur.aur:
+        use: yay
+        name:
+          - heroic-games-launcher-bin
+          - protontricks
+
+    - name: Install FOSS games
+      community.general.pacman:
+        name:
+          - angband
+          - cataclysm-dda
+          - cataclysm-dda-tiles
+          - crawl-ncurses
+          - openra
+          - openarena
+          - supertuxkart
+          - xonotic
+          - ppsspp
+        state: latest
+        extra_args: --needed --noconfirm
+
+    - name: Install FOSS games (from the AUR)
+      kewlfft.aur.aur:
+        use: yay
+        name:
+          - oolite
+          - urbanterror
+          - gzdoom-bin
+          - pioneer-bin
+          - the-dark-mod-bin
+
+# Other things to untall
+# - Latex
+# - CUPS
+# - Gaming playbook (wine deps, steam lutris mangohud)
+# - Open source gmaes

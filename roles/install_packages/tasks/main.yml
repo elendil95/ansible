@@ -17,8 +17,7 @@
       - lightdm-slick-greeter
       - xfce4
       - xfce4-goodies
-      - pavucontrol
-      - xarchiver
+      - pavucontrol # probably wrong, does it support pipewire?
       - gvim
       - git
       - stow
@@ -37,13 +36,11 @@
       - ttf-font-awesome
       - xdg-user-dirs
       - xdg-user-dirs-gtk
-      - rxvt-unicode
-      - urxvt-perls
+      - alacritty # Backup terminal, just in case
       - python-pip
       - vim-powerline
       - powerline-fonts
       - zsh
-      - zsh-doc
       - zsh-autosuggestions
       - zsh-completions
       - zsh-lovers
@@ -53,33 +50,32 @@
       - bluez
       - blueman
       - pinta
-      - ristretto
+      - ristretto # Pick one between pinta or ristretto
       - mpv
-      - vlc
       - neofetch
       - arandr
       - net-tools
       - networkmanager
       - dhcpcd
       - tlp
-      - qbittorrent
       - htop
       - gparted
-      - btrfs-progs
-      - exfatprogs
-      - f2fs-tools
-      - gpart
-      - mtools
+      - gpart # Recover corrupted MBR partition tables with GParted
+      - btrfs-progs # support reading BTRFS
+      - dosfstools # support reading FAT16/FAT32
+      - exfatprogs # support reading exFAT
+      - f2fs-tools # supports reading f2fs (that one SSD FS)
+      - ntfs-3g # See note at the bottom!
+      - mtools # Support reading DOS file systems (whatever that means)
       - rsync
-      - adwaita-cursors
-      - adwaita-icon-theme
-      - libadwaita
-      - lm_sensors
-      - file-roller
-      - unrar
-      - p7zip
-      - zip
-      - unzip
+      - lm_sensors # Enable use of temperature sensors, will error out in VBox
+      - engranpa # GUI archive manager
+      - unace # ACE support in engranpa
+      - unrar # RAR support in engranpa
+      - p7zip # 7z and ARJ support in engranpa
+      - zip # Already an ngranpa dependency
+      - unzip # Already an ngranpa dependency
+      - cpio # Supports a bunch new formats, including RPM
       - lrzip
       - squashfs-tools
       - pv
@@ -112,23 +108,42 @@
       - gvfs
       - thunar-media-tags-plugin
       - thunar-volman
+      - catfish
       - tumbler
       - cmus
       - calcurse
-      - gnome-calculator
+      - mate-calc
       - maim
       - notify-osd
       - trash-cli
       - atool
       - highlight
       - polkit-gnome
+      - zathura
+      - zathura-pdf-mupdf
+      - zathura-cb
+      - zathura-djvu
+      - zathura-ps
     state: latest
     extra_args: --needed --noconfirm
+
 - name: Gather package facts # Gets a list of crrently installed packages
   ansible.builtin.package_facts:
     manager: auto
+
 - name: Install pulseaudio if no audio system is present.
   ansible.builtin.package:
     name: pulseaudio
     state: present
   when: "'pipewire-pulse' not in ansible_facts.packages and 'pulseaudio' not in ansible_facts.packages"
+
+# ABOUT THE NTFS SITUATION
+# ========================
+# There are 2 drivers in Arch to support NTFS:
+#
+# 1) NTFS-3G. Older, more limited support. Provides driver + userspace utils
+#
+# 2) Built-in driver: Newer, comes with all (arch) kernels since 5.15
+# However it has no userspace utilities, so we still to rely on ntfs-3g for that.
+#
+# Source: https://wiki.archlinux.org/title/NTFS

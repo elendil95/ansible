@@ -1,0 +1,43 @@
+---
+- name: Install Extra packages for a more "full" GUI Desktop
+  hosts: localhost
+  connection: local
+  become: true
+
+  tasks:
+    - name: Install random extra packages
+      community.general.pacman:
+        name:
+          - rxvt-unicode
+          - urxvt-perls
+          - zsh-doc
+          - vlc
+          - qbittorrent
+          - libadwaita
+          - adwaita-cursors
+          - adwaita-icon-theme
+          - gimp
+          - quodlibet
+          - easytag
+          - libreoffice-fresh
+          - # Pick some random gui pdf viewer
+          - baobab
+          - simple-scan
+          - filezilla
+          - hexchat
+          - wireshark
+          - simplescreenrecorder
+        state: latest
+        extra_args: --needed --noconfirm
+
+    # - name: Install random extra packages (from the AUR)
+    #   kewlfft.aur.aur:
+    #     use: yay
+    #     name:
+    #       - sidewinderd # Macro support for Logitech G105
+
+# Other things to untall
+# - Latex
+# - CUPS
+# - Gaming playbook (wine deps, steam lutris mangohud)
+# - Open source gmaes
