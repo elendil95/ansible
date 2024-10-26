@@ -5,12 +5,11 @@
   become: true
 
   tasks:
-    # - name: Enable 32-bit libraries
-    #   ansible.builtin.blockinfile:
-    #     path: /etc/pacman.conf
-    #     block: |
-    #       [multilib]
-    #       Include = /etc/pacman.d/mirrorlist
+    # This seems a bit of a crime but it works:
+    # The long-ass regex will capture both lines at once, so there will only ever be one match
+    # and then simply replaces the match with the content of the 2 capture groups
+    # (uncommented line 1 +\n) and (uncommented line 2)
+    # See example at the bottom for more:
     - name: Enable 32-bit libraries
       ansible.builtin.replace:
         path: /etc/pacman.conf
@@ -120,3 +119,16 @@
 # - CUPS
 # - Gaming playbook (wine deps, steam lutris mangohud)
 # - Open source gmaes
+
+# Un-commenting line example.
+# Can take multiple line with loop, but each line but be standalone, and is replaced only once.
+# - name: Uncomment shit
+#   lineinfile:
+#     path: /etc/randomfile
+#     regexp: '^#+\s*{{ item.key }}\s'
+#     line: "{{ item.key }} {{ item.value }}"
+#   with_items:
+#   - key: FunnyNumber
+#     value: 69
+#   - key: BestGirl
+#     value: Hemiru
