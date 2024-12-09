@@ -130,6 +130,7 @@
         name:
           - heroic-games-launcher-bin
           - protontricks
+      become: false
 
     - name: Install FOSS games
       community.general.pacman:
@@ -143,6 +144,7 @@
           - supertuxkart
           - xonotic
           - ppsspp
+          - quadrapassel
         state: latest
         extra_args: --needed --noconfirm
 
@@ -155,7 +157,8 @@
           - gzdoom-bin
           - pioneer-bin
           - the-dark-mod-bin
-
+          - gearhead
+      become: false
 # Other things to untall
 # - Latex
 # - CUPS

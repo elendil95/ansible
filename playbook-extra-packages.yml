@@ -8,22 +8,26 @@
     - name: Install random extra packages
       community.general.pacman:
         name:
-          - rxvt-unicode
+          - rxvt-unicode # We already have alacritty as a backup terminal in the main playbook
           - urxvt-perls
           - zsh-doc
-          - vlc
+          - vlc # We already have MPV in the main playbook
           - qbittorrent
           - gimp
-          - quodlibet
-          - easytag
+          - quodlibet # GUI music manager
+          - easytag # Manage music metadata
+          - gpodder # Gui Podcast manager, supports self-hosted sync service
           - libreoffice-fresh
           - # Pick some random gui pdf viewer
           - baobab
-          - simple-scan
+          - simple-scan # For document scanning
           - filezilla
           - hexchat
+          - telegram-desktop
+          - discord
           - wireshark
           - simplescreenrecorder
+          - qutebrowser # Unbloated browser with VIM keybinds
         state: latest
         extra_args: --needed --noconfirm
 
@@ -31,6 +35,8 @@
     #   kewlfft.aur.aur:
     #     use: yay
     #     name:
+    #       - vscodium-bin
+    #       - masterpdfeditor # Proprietary PDF software, kinda sucks but its the best one to fill-in and sign stuff
     #       - sidewinderd # Macro support for Logitech G105
 
 # Other things to untall

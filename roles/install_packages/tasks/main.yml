@@ -13,40 +13,40 @@
     name:
       - xorg-server
       - xorg-xinit
-      - lightdm
-      - lightdm-slick-greeter
+      - lightdm # Login manager of choice
+      - lightdm-slick-greeter # The default ui sucks so we have this one
       - xfce4
       - xfce4-goodies
       - pavucontrol # probably wrong, does it support pipewire?
       - gvim
       - git
-      - stow
+      - stow # Necessary to sim-link dotfiles into place
       - openssh
       - curl
       - wget
       - man-pages
       - ttf-ubuntu-font-family
       - noto-fonts
-      - noto-fonts-cjk
-      - noto-fonts-emoji
+      - noto-fonts-cjk # Japanese/Korean font
+      - noto-fonts-emoji # Emoji font
       - ttf-droid
       - ttf-dejavu
-      - ttf-hack
+      - ttf-hack # Technically pointless since we always the nerd-font version
       - ttf-hack-nerd
-      - ttf-font-awesome
+      - ttf-font-awesome # Used mainly for slstatus icons, i think
       - xdg-user-dirs
       - xdg-user-dirs-gtk
       - alacritty # Backup terminal, just in case
       - python-pip
       - vim-powerline
-      - powerline-fonts
+      - powerline-fonts # This might actually be redundant with nerd-font
       - zsh
       - zsh-autosuggestions
       - zsh-completions
       - zsh-lovers
       - tig
       - gitui
-      - meld
+      - meld # Its here because we set it as default git difftool/mergetools
       - bluez
       - blueman
       - pinta
@@ -57,7 +57,7 @@
       - net-tools
       - networkmanager
       - dhcpcd
-      - tlp
+      - tlp # Power management on laptops.
       - htop
       - gparted
       - gpart # Recover corrupted MBR partition tables with GParted
@@ -87,7 +87,7 @@
     name:
       - python-pywal
       - picom
-      - xsettingsd
+      - xsettingsd # Allows GUI apps in dwm to still have theming
       - network-manager-applet
       - redshift
       - xorg-server-devel
@@ -103,12 +103,12 @@
       - feh
       - keepassxc
       - thunderbird
-      - thunar
+      - thunar # Technically already installed by xfce-goodies, i think
       - thunar-archive-plugin
       - gvfs
       - thunar-media-tags-plugin
       - thunar-volman
-      - catfish
+      - catfish # Same as above
       - tumbler
       - cmus
       - calcurse
