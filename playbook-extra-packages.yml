@@ -28,6 +28,7 @@
           - wireshark
           - simplescreenrecorder
           - qutebrowser # Unbloated browser with VIM keybinds
+          - xournalpp # Hand-writing support with PDFs, for signing and such
         state: latest
         extra_args: --needed --noconfirm
 
