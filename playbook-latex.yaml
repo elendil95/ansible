@@ -1,0 +1,19 @@
+---
+- name: Install Latex packages.
+  hosts: localhost
+  connection: local
+  become: true
+
+  tasks:
+  # At least the ones needed to compile all latex projects on my github
+    - name: Install LateX packages
+      community.general.pacman:
+        name:
+          - texlive-core
+          - texlive-fontsextra
+          - texlive-formatsextra
+          - texlive-latexextra
+          - texlive-publishers
+          - texlive-bibtexextra
+        state: latest
+        extra_args: --needed --noconfirm
