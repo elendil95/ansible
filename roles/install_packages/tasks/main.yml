@@ -68,7 +68,7 @@
       - mtools # Support reading DOS file systems (whatever that means)
       - rsync
       - lm_sensors # Enable use of temperature sensors, will error out in VBox
-      - engranpa # GUI archive manager
+      - engrampa # GUI archive manager
       - unace # ACE support in engranpa
       - unrar # RAR support in engranpa
       - p7zip # 7z and ARJ support in engranpa
