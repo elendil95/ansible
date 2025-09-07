@@ -49,10 +49,11 @@
       - meld # Its here because we set it as default git difftool/mergetools
       - bluez
       - blueman
-      - pinta
-      - ristretto # Pick one between pinta or ristretto
+#      - pinta Package was removed from official Arch repos in April 2025
+      - ristretto
       - mpv
-      - neofetch
+      - vlc
+      - fastfetch
       - arandr
       - net-tools
       - networkmanager
@@ -85,6 +86,7 @@
 - name: Install packages needed by dwm
   community.general.pacman:
     name:
+      - base-devel # Also needed to compile yay
       - python-pywal
       - picom
       - xsettingsd # Allows GUI apps in dwm to still have theming
