@@ -29,3 +29,9 @@ Then:
 After rebooting and logging into dwm, set resolution using `xrandr` or `arandr` if necessary.
 
 Refer to `dwm(1)` for a list of keyboard shortcuts, and of what they do.
+
+**Some extra playbooks have been added**
+- playbook-latex.yml: Installs some latex packages that can be useful. No latex editor is provided, just use vim and zathura (for live pdf previews)
+- playbook-extra-packages.yml: Installs a bunch of more GUI software like libreoffice etc, to bring the system more in line with that a noob-friendly distro has out of the box
+- playbook-gaming.yml: Installs all the gazzilion dependencies and 32bit libraries needed for gaming (especially for non-steam games), and a selection of FOSS games.
+  It will also install the correct graphics libraries for you, if you uncomment the right task in the playbook. 
