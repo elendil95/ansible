@@ -1,0 +1,47 @@
+---
+- name: Install Extra packages for a more "full" GUI Desktop
+  hosts: localhost
+  connection: local
+  become: true
+
+  tasks:
+    - name: Install random extra packages
+      community.general.pacman:
+        name:
+          - rxvt-unicode # We already have alacritty as a backup terminal in the main playbook
+          - urxvt-perls
+          - zsh-doc
+          - vlc # We already have MPV in the main playbook
+          - qbittorrent
+          - gimp
+          - quodlibet # GUI music manager
+          - easytag # Manage music metadata
+          - gpodder # Gui Podcast manager, supports self-hosted sync service
+          - libreoffice-fresh
+          - # Pick some random gui pdf viewer
+          - baobab
+          - simple-scan # For document scanning
+          - filezilla
+          - hexchat
+          - telegram-desktop
+          - discord
+          - wireshark
+          - simplescreenrecorder
+          - qutebrowser # Unbloated browser with VIM keybinds
+          - xournalpp # Hand-writing support with PDFs, for signing and such
+        state: latest
+        extra_args: --needed --noconfirm
+
+    # - name: Install random extra packages (from the AUR)
+    #   kewlfft.aur.aur:
+    #     use: yay
+    #     name:
+    #       - vscodium-bin
+    #       - masterpdfeditor # Proprietary PDF software, kinda sucks but its the best one to fill-in and sign stuff
+    #       - sidewinderd # Macro support for Logitech G105
+
+# Other things to untall
+# - Latex
+# - CUPS
+# - Gaming playbook (wine deps, steam lutris mangohud)
+# - Open source gmaes
