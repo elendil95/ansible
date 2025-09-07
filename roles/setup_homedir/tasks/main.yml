@@ -72,6 +72,7 @@
     owner: root
     group: root
     mode: "0644"
+  become: true
 
 - name: Switch LightDM to use 'Slick' greeter
   ansible.builtin.lineinfile:

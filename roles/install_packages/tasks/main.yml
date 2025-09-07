@@ -49,10 +49,9 @@
       - meld # Its here because we set it as default git difftool/mergetools
       - bluez
       - blueman
-      - pinta
-      - ristretto # Pick one between pinta or ristretto
+      - ristretto
       - mpv
-      - neofetch
+      - fastfetch
       - arandr
       - net-tools
       - networkmanager
@@ -69,7 +68,7 @@
       - mtools # Support reading DOS file systems (whatever that means)
       - rsync
       - lm_sensors # Enable use of temperature sensors, will error out in VBox
-      - engranpa # GUI archive manager
+      - engrampa # GUI archive manager
       - unace # ACE support in engranpa
       - unrar # RAR support in engranpa
       - p7zip # 7z and ARJ support in engranpa
@@ -85,6 +84,7 @@
 - name: Install packages needed by dwm
   community.general.pacman:
     name:
+      - base-devel # Also needed to compile yay
       - python-pywal
       - picom
       - xsettingsd # Allows GUI apps in dwm to still have theming

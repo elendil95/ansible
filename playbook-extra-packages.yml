@@ -25,21 +25,21 @@
           - hexchat
           - telegram-desktop
           - discord
-          - wireshark
-          - simplescreenrecorder
+          - wireshark-qt
           - qutebrowser # Unbloated browser with VIM keybinds
           - xournalpp # Hand-writing support with PDFs, for signing and such
         state: latest
         extra_args: --needed --noconfirm
 
-    # - name: Install random extra packages (from the AUR)
-    #   kewlfft.aur.aur:
-    #     use: yay
-    #     name:
-    #       - vscodium-bin
+    - name: Install random extra packages (from the AUR)
+      kewlfft.aur.aur:
+        use: yay
+        name:
+          - vscodium-bin
+          - simplescreenrecorder
     #       - masterpdfeditor # Proprietary PDF software, kinda sucks but its the best one to fill-in and sign stuff
     #       - sidewinderd # Macro support for Logitech G105
-
+      become: false
 # Other things to untall
 # - Latex
 # - CUPS

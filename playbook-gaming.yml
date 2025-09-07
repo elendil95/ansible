@@ -140,7 +140,6 @@
           - cataclysm-dda-tiles
           - crawl-ncurses
           - openra
-          - openarena
           - supertuxkart
           - xonotic
           - ppsspp
@@ -153,6 +152,7 @@
         use: yay
         name:
           - oolite
+          - openarena
           - urbanterror
           - gzdoom-bin
           - pioneer-bin
