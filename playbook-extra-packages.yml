@@ -39,7 +39,7 @@
           - simplescreenrecorder
     #       - masterpdfeditor # Proprietary PDF software, kinda sucks but its the best one to fill-in and sign stuff
     #       - sidewinderd # Macro support for Logitech G105
-        become: false
+      become: false
 # Other things to untall
 # - Latex
 # - CUPS
