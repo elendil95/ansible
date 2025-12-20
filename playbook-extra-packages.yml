@@ -28,6 +28,13 @@
           - wireshark-qt
           - qutebrowser # Unbloated browser with VIM keybinds
           - xournalpp # Hand-writing support with PDFs, for signing and such
+          - shellcheck
+          - shfmt
+          - veracrypt
+          - yt-dlp
+          - deno
+
+
         state: latest
         extra_args: --needed --noconfirm
 
@@ -37,6 +44,7 @@
         name:
           - vscodium-bin
           - simplescreenrecorder
+          - proxmox-backup-client-bin
     #       - masterpdfeditor # Proprietary PDF software, kinda sucks but its the best one to fill-in and sign stuff
     #       - sidewinderd # Macro support for Logitech G105
       become: false

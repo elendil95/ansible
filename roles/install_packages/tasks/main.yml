@@ -46,6 +46,9 @@
       - zsh-lovers
       - tig
       - gitui
+      - tldr
+      - tmux
+      - ansible-lint
       - meld # Its here because we set it as default git difftool/mergetools
       - bluez
       - blueman
@@ -78,6 +81,7 @@
       - lrzip
       - squashfs-tools
       - pv
+      - os-prober
     state: latest
     extra_args: --needed --noconfirm
 
@@ -85,6 +89,7 @@
   community.general.pacman:
     name:
       - base-devel # Also needed to compile yay
+      - imagemagick # Dependency for python-pywal
       - python-pywal
       - picom
       - xsettingsd # Allows GUI apps in dwm to still have theming
