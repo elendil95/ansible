@@ -22,7 +22,7 @@
           - baobab
           - simple-scan # For document scanning
           - filezilla
-          - hexchat
+          # - hexchat
           - telegram-desktop
           - discord
           - wireshark-qt
