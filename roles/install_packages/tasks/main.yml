@@ -59,7 +59,7 @@
       - arandr
       - net-tools
       - networkmanager
-      - dhcpcd
+      - systemd-resolved
       - tlp # Power management on laptops.
       - htop
       - gparted

@@ -1,8 +1,25 @@
 ---
-- name: Enable DHCP service
+- name: Enable systemd-resolved
   ansible.builtin.service:
-    name: dhcpcd
+    name: systemd-resolved
     enabled: true
+
+- name: Tell NetworkManager to use systemd-resolved
+  ansible.builtin.copy:
+    src: files/dns.conf
+    dest: /etc/NetworkManager/conf.d/dns.conf
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Symlink /etc/resolv.conf
+  ansible.builtin.file:
+    src: /etc/resolv.conf
+    dest: /run/systemd/resolve/stub-resolv.conf
+    owner: root
+    group: root
+    mode: '0644'
+    state: link
 
 - name: Enable NetworkManager
   ansible.builtin.service:
