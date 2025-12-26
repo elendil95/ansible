@@ -59,7 +59,6 @@
       - arandr
       - net-tools
       - networkmanager
-      - systemd-resolved
       - tlp # Power management on laptops.
       - htop
       - gparted
