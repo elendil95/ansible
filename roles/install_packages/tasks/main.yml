@@ -53,6 +53,7 @@
       - bluez
       - blueman
       - ristretto
+      - ffmpeg
       - mpv
       - fastfetch
       - arandr

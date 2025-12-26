@@ -12,6 +12,8 @@
           - urxvt-perls
           - zsh-doc
           - vlc # We already have MPV in the main playbook
+          - vlc-plugin-ffmpeg
+          # - intel-media-sdk Intel QuickSync support in vlc
           - qbittorrent
           - gimp
           - quodlibet # GUI music manager
