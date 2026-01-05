@@ -13,6 +13,10 @@
           - zsh-doc
           - vlc # We already have MPV in the main playbook
           - vlc-plugin-ffmpeg
+          - vlc-plugin-matroska # MKV support
+          - vlc-plugin-freetype # font support
+          - vlc-plugin-srt # Subtitle support
+          - vlc-plugin-ass # Subtitle support (.ass)
           # - intel-media-sdk Intel QuickSync support in vlc
           - qbittorrent
           - gimp
