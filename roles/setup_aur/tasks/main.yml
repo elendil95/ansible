@@ -58,7 +58,7 @@
 - name: Enable multi-core building for AUR packages
   ansible.builtin.lineinfile:
     path: /etc/makepkg.conf
-    insertafter: '# MAKEFLAGS="-j2"'
+    insertafter: '#MAKEFLAGS="-j2"'
     line: 'MAKEFLAGS="--jobs=$(nproc)"'
     state: present
   become: true
