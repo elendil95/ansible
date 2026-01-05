@@ -3,6 +3,7 @@
   ansible.builtin.service:
     name: systemd-resolved
     enabled: true
+    state: started
 
 - name: Tell NetworkManager to use systemd-resolved
   ansible.builtin.copy:
@@ -25,28 +26,34 @@
   ansible.builtin.service:
     name: NetworkManager
     enabled: true
+    state: started
 
 - name: Enable LightDM
   ansible.builtin.service:
     name: lightdm
     enabled: true
+    state: started
 
 - name: Enable TLP
   ansible.builtin.service:
     name: tlp
     enabled: true
+    state: started
 
 - name: Enable Bluetooth
   ansible.builtin.service:
     name: bluetooth
     enabled: true
+    state: started
 
 - name: Enable lm_sensors
   ansible.builtin.service:
     name: lm_sensors
     enabled: true
+    state: started
 
 - name: Enable Polkit
   ansible.builtin.service:
     name: polkit
     enabled: true
+    state: started
