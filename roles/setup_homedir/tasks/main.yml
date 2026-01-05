@@ -57,10 +57,18 @@
     group: "{{ remote_regular_user_group }}"
     mode: "0700"
 
+- name: Debug matched files
+  debug:
+    var: lookup(
+          'ansible.builtin.fileglob',
+          'files/*.{png,jpg,jpeg,webp}',
+          wantlist=True
+        )
+
 - name: Copy over wallpapers
   ansible.builtin.copy:
-    src: files/
-    dest: /home/{{ remote_regular_user }}/Pictures/std_wallpapers
+    src: "{{ item }}"
+    dest: "/home/{{ remote_regular_user }}/Pictures/std_wallpapers/{{ item | basename }}"
     owner: "{{ remote_regular_user }}"
     group: "{{ remote_regular_user_group }}"
     mode: "0644"
