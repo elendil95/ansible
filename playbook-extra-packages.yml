@@ -53,7 +53,10 @@
           - proxmox-backup-client-bin
     #       - masterpdfeditor # Proprietary PDF software, kinda sucks but its the best one to fill-in and sign stuff
     #       - sidewinderd # Macro support for Logitech G105
-      become: false
+        state: present
+      become: true
+      become_user: aur_builder
+
 # Other things to untall
 # - Latex
 # - CUPS

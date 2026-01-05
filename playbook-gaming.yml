@@ -130,7 +130,9 @@
         name:
           - heroic-games-launcher-bin
           - protontricks
-      become: false
+        state: present
+      become: true
+      become_user: aur_builder
 
     - name: Install FOSS games
       community.general.pacman:
@@ -158,7 +160,9 @@
           - pioneer-bin
           - the-dark-mod-bin
           - gearhead
-      become: false
+        state: present
+      become: true
+      become_user: aur_builder
 # Other things to untall
 # - Latex
 # - CUPS
