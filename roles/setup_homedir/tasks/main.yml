@@ -64,6 +64,9 @@
     owner: "{{ remote_regular_user }}"
     group: "{{ remote_regular_user_group }}"
     mode: "0644"
+  with_fileglob:
+    - "files/*.jpg"
+    - "files/*.png"
 
 - name: Copy over Lock Screen background image
   ansible.builtin.copy:
