@@ -52,7 +52,6 @@
   ansible.builtin.service:
     name: lm_sensors
     enabled: true
-    state: started
 
 - name: Enable Polkit
   ansible.builtin.service:
