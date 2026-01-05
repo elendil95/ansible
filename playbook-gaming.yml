@@ -121,7 +121,7 @@
           - vulkan-icd-loader # Vulkan support
           - vulkan-tools # Vulkan support
         state: latest
-        reason: dependency
+        # reason: dependency
         extra_args: --needed --noconfirm
 
     - name: Install gaming software (from the AUR)
