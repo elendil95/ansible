@@ -15,18 +15,15 @@
 
 - name: Symlink /etc/resolv.conf
   ansible.builtin.file:
-    src: /etc/resolv.conf
-    dest: /run/systemd/resolve/stub-resolv.conf
-    owner: root
-    group: root
-    mode: '0644'
+    src: /run/systemd/resolve/stub-resolv.conf
+    dest: /etc/resolv.conf
     state: link
 
 - name: Enable NetworkManager
   ansible.builtin.service:
     name: NetworkManager
     enabled: true
-    state: started
+    state: restarted
 
 - name: Enable LightDM
   ansible.builtin.service:
