@@ -58,6 +58,7 @@
     #       # - mesa is assumed to be installed
     #       - vulkan-intel
     #       - lib32-vulkan-intel
+    #       - intel-media-sdk
     #     state: latest
     #     extra_args: --needed --noconfirm
     #   when: (hostvars.graphics == 'amd')

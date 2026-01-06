@@ -17,6 +17,18 @@
           - vlc-plugin-freetype # font support
           - vlc-plugin-srt # Subtitle support
           - vlc-plugin-ass # Subtitle support (.ass)
+          - vlc-plugin-svg # SVG text support
+          - vlc-plugin-bluray
+          - vlc-plugin-dvd
+          - vlc-plugin-fluidsynth # Fluidsynth (MIDI) suopport
+          - vlc-plugin-gstreamer
+          - vlc-plugin-jack
+          - vlc-plugin-mad # MPEG1 support
+          - vlc-plugin-mpeg2 # MPEG2 codec support
+          - vlc-plugin-nfs # Access files off NFS
+          - vlc-plugin-x264 # for H264/AVC encoding support
+          - vlc-plugin-x265 # for H265/HEVC encoding support
+          - vlc-plugin-quicksync # QuickSync codec (?) support
           # - intel-media-sdk Intel QuickSync support in vlc
           - qbittorrent
           - gimp
