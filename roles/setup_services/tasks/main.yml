@@ -63,3 +63,4 @@
     name: syncthing
     state: started
     scope: user
+  become: false
