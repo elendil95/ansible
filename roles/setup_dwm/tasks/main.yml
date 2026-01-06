@@ -55,6 +55,7 @@
     owner: root
     group: root
     mode: "0644"
+  become: true
 
 - name: Compile dwm
   ansible.builtin.command: make
