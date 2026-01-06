@@ -48,6 +48,14 @@
 - ansible.builtin.debug:
     msg: "wal output: {{ wal.stdout }}"
 
+- name: Add Xorg configuration for touchpads (tap-to-click)
+  ansible.builtin.copy:
+    src: 30-touchpad.conf
+    dest: /etc/X11/xorg.conf.d/
+    owner: root
+    group: root
+    mode: "0644"
+
 - name: Compile dwm
   ansible.builtin.command: make
   args:
