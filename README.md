@@ -26,6 +26,8 @@ Then:
 
 3) Run `ansible-playbook -K playbook-main.yml`, you will be prompted for your sudo password.
 
+4) Run `ansible-playbook -K playbook-cleanup.yml` after you are done. You will be prompted for your sudo password.
+
 After rebooting and logging into dwm, set resolution using `xrandr` or `arandr` if necessary.
 
 Refer to `dwm(1)` for a list of keyboard shortcuts, and of what they do.

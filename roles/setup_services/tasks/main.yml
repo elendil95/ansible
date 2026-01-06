@@ -1,35 +1,66 @@
 ---
-- name: Enable DHCP service
+- name: Enable and Start systemd-resolved
   ansible.builtin.service:
-    name: dhcpcd
+    name: systemd-resolved
     enabled: true
+    state: started
 
-- name: Enable NetworkManager
+- name: Tell NetworkManager to use systemd-resolved
+  ansible.builtin.copy:
+    src: files/dns.conf
+    dest: /etc/NetworkManager/conf.d/dns.conf
+    owner: root
+    group: root
+    mode: '0644'
+
+- name: Remove old resolv.conf
+  ansible.builtin.file:
+    path: /etc/resolv.conf
+    state: absent
+
+- name: Symlink /etc/resolv.conf
+  ansible.builtin.file:
+    src: /run/systemd/resolve/stub-resolv.conf
+    dest: /etc/resolv.conf
+    state: link
+
+- name: Restart NetworkManager
   ansible.builtin.service:
     name: NetworkManager
     enabled: true
+    state: restarted
 
-- name: Enable LightDM
+- name: Ensure LightDM is enabled
   ansible.builtin.service:
     name: lightdm
     enabled: true
 
-- name: Enable TLP
+- name: Enable and Start TLP
   ansible.builtin.service:
     name: tlp
     enabled: true
+    state: started
 
-- name: Enable Bluetooth
+- name: Enable and Start Bluetooth
   ansible.builtin.service:
     name: bluetooth
     enabled: true
+    state: started
 
 - name: Enable lm_sensors
   ansible.builtin.service:
     name: lm_sensors
     enabled: true
 
-- name: Enable Polkit
+- name: Enable and Start Polkit
   ansible.builtin.service:
     name: polkit
     enabled: true
+    state: started
+
+- name: Enable and Start Syncthing as a user service
+  ansible.builtin.systemd:
+    name: syncthing
+    state: started
+    scope: user
+  become: false

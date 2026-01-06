@@ -59,11 +59,14 @@
 
 - name: Copy over wallpapers
   ansible.builtin.copy:
-    src: files/
-    dest: /home/{{ remote_regular_user }}/Pictures/std_wallpapers
+    src: "{{ item }}"
+    dest: "/home/{{ remote_regular_user }}/Pictures/std_wallpapers/{{ item | basename }}"
     owner: "{{ remote_regular_user }}"
     group: "{{ remote_regular_user_group }}"
     mode: "0644"
+  with_fileglob:
+    - "files/*.jpg"
+    - "files/*.png"
 
 - name: Copy over Lock Screen background image
   ansible.builtin.copy:

@@ -20,10 +20,12 @@
       - pavucontrol # probably wrong, does it support pipewire?
       - gvim
       - git
+      - less
       - stow # Necessary to sim-link dotfiles into place
       - openssh
       - curl
       - wget
+      - man-db
       - man-pages
       - ttf-ubuntu-font-family
       - noto-fonts
@@ -46,16 +48,19 @@
       - zsh-lovers
       - tig
       - gitui
+      - tldr
+      - tmux
+      - ansible-lint
       - meld # Its here because we set it as default git difftool/mergetools
       - bluez
       - blueman
       - ristretto
+      - ffmpeg
       - mpv
       - fastfetch
       - arandr
       - net-tools
       - networkmanager
-      - dhcpcd
       - tlp # Power management on laptops.
       - htop
       - gparted
@@ -78,6 +83,7 @@
       - lrzip
       - squashfs-tools
       - pv
+      - os-prober
     state: latest
     extra_args: --needed --noconfirm
 
@@ -85,6 +91,7 @@
   community.general.pacman:
     name:
       - base-devel # Also needed to compile yay
+      - imagemagick # Dependency for python-pywal
       - python-pywal
       - picom
       - xsettingsd # Allows GUI apps in dwm to still have theming
