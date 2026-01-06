@@ -20,10 +20,12 @@
       - pavucontrol # probably wrong, does it support pipewire?
       - gvim
       - git
+      - less
       - stow # Necessary to sim-link dotfiles into place
       - openssh
       - curl
       - wget
+      - man-db
       - man-pages
       - ttf-ubuntu-font-family
       - noto-fonts
