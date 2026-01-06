@@ -1,5 +1,5 @@
 ---
-- name: Enable systemd-resolved
+- name: Enable and Start systemd-resolved
   ansible.builtin.service:
     name: systemd-resolved
     enabled: true
@@ -24,25 +24,24 @@
     dest: /etc/resolv.conf
     state: link
 
-- name: Enable NetworkManager
+- name: Restart NetworkManager
   ansible.builtin.service:
     name: NetworkManager
     enabled: true
     state: restarted
 
-- name: Enable LightDM
+- name: Ensure LightDM is enabled
   ansible.builtin.service:
     name: lightdm
     enabled: true
-    state: started
 
-- name: Enable TLP
+- name: Enable and Start TLP
   ansible.builtin.service:
     name: tlp
     enabled: true
     state: started
 
-- name: Enable Bluetooth
+- name: Enable and Start Bluetooth
   ansible.builtin.service:
     name: bluetooth
     enabled: true
@@ -53,8 +52,14 @@
     name: lm_sensors
     enabled: true
 
-- name: Enable Polkit
+- name: Enable and Start Polkit
   ansible.builtin.service:
     name: polkit
     enabled: true
     state: started
+
+- name: Enable and Start Syncthing as a user service
+  ansible.builtin.systemd:
+    name: syncthing
+    state: started
+    scope: user
