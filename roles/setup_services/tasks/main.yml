@@ -81,9 +81,17 @@
     group: root
     mode: "0644"
 
+- name: Create /etc/pacman.d/hooks dir
+  ansible.builtin.file:
+    path: /etc/pacman.d/hooks
+    state: directory
+    owner: root
+    group: root
+    mode: "0755"
+
 - name: Seed check-updates pacman hook
   ansible.builtin.copy:
-    src: check-updates.hook
+    src: check-update.hook
     dest: /etc/pacman.d/hooks/updates.hook
     owner: root
     group: root
