@@ -60,6 +60,7 @@
       - fastfetch
       - arandr
       - net-tools
+      - bind # Provides DNS tools (nslookip, dig etc.)
       - networkmanager
       - tlp # Power management on laptops.
       - htop
