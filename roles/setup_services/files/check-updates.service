@@ -1,0 +1,12 @@
+[Unit]
+Description=Check for available Arch Linux updates
+Requires=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/bin/sh -c 'checkupdates | wc -l > /tmp/updates_count'
+Restart=no
+
+[Install]
+WantedBy=multi-user.target
