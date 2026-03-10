@@ -1,0 +1,9 @@
+[Unit]
+Description=Check for available Arch Linux updates every 2h
+
+[Timer]
+OnUnitActiveSec=2h
+Unit=check-updates.service
+
+[Install]
+WantedBy=timers.target

@@ -85,6 +85,7 @@
       - squashfs-tools
       - pv
       - os-prober
+      - pacman-contrib # Provides some pacman scripts to check for updates etc
     state: latest
     extra_args: --needed --noconfirm
 

@@ -1,0 +1,9 @@
+[Trigger]
+Operation = Upgrade
+Type = Package
+Target = *
+[Action]
+Description = Updating DWM indicator...
+Depends = systemd
+When = PostTransaction
+Exec = /bin/sh -c 'checkupdates | wc -l > /tmp/updates_count'
