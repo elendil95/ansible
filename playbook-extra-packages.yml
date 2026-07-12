@@ -1,7 +1,6 @@
 ---
 - name: Install Extra packages for a more "full" GUI Desktop
-  hosts: localhost
-  connection: local
+  hosts: all
   become: true
 
   tasks:

@@ -1,7 +1,6 @@
 ---
 - name: Setup up base Arch system
-  hosts: localhost
-  connection: local
+  hosts: all
   become: true
   roles:
     - { role: gather_facts, become: false }
