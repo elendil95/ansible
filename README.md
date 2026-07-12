@@ -50,3 +50,7 @@ It tests most things, except:
 2) create a venv: `python -n venv .venv` and `source .venv/bin/activate`
 3) Install molecule `pip install molecule "molecule-plugins[docker]"`
 4) Run with `molecule test` or ` export PY_COLORS=0 && molecule test 2>&1 | tee molecule.log` (to capture output, we disable color so ANSI escape sequences don't pollute the log)
+
+To run molecule against the extra playbooks, run: `molecule test -s extra-packages` or `molecule test -s gaming`
+
+In all cases, if you want to keep the container alive afterwards (so you can connect to it for extra testing) you can replace `molecule test` with `molecule converge`
