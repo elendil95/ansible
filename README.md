@@ -37,3 +37,16 @@ Refer to `dwm(1)` for a list of keyboard shortcuts, and of what they do.
 - playbook-extra-packages.yml: Installs a bunch of more GUI software like libreoffice etc, to bring the system more in line with that a noob-friendly distro has out of the box
 - playbook-gaming.yml: Installs all the gazzilion dependencies and 32bit libraries needed for gaming (especially for non-steam games), and a selection of FOSS games.
   It will also install the correct graphics libraries for you, if you uncomment the right task in the playbook. 
+
+## MOLECULE TESTING
+A molecule testing harness has been added, to simplify maintenance of the playbook going forward.
+Molecule will run the playbook against the official arch linux docker image.
+It tests most things, except: 
+- Some tasks involving pywal that explicitly require $DISPLAY
+- The `setup services` role, because docker has no systemd
+
+### How to use:
+1) ensure docker is installed and started (on arch, just install `docker` package)
+2) create a venv: `python -n venv .venv` and `source .venv/bin/activate`
+3) Install molecule `pip install molecule "molecule-plugins[docker]"`
+4) Run with `molecule test` or ` export PY_COLORS=0 && molecule test 2>&1 | tee molecule.log` (to capture output, we disable color so ANSI escape sequences don't pollute the log)
