@@ -93,6 +93,8 @@
   community.general.pacman:
     name:
       - base-devel # Also needed to compile yay
+      - cmake
+      - boost
       - imagemagick # Dependency for python-pywal
       - python-pywal
       - picom
