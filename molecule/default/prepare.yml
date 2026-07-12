@@ -12,7 +12,7 @@
       changed_when: true
 
     - name: Sync package DB and install Ansible prerequisites
-      ansible.builtin.raw: pacman -Sy --noconfirm python sudo
+      ansible.builtin.raw: pacman -Syy && pacman -S --noconfirm --needed python sudo
       changed_when: true
 
     - name: Create test user

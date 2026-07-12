@@ -4,7 +4,8 @@
 # gather_facts resolves remote_regular_user the same way as a real deployment.
 #
 # The pywal tasks in setup_dwm are skipped via molecule_testing: true (set in
-# molecule.yml). The wal_cache files in molecule/default/files/ are seeded
+# molecule.yml).
+# The wal_cache files in molecule/default/files/ are seeded
 # beforehand so the dwm build has the colorscheme headers it needs.
 - name: Converge
   hosts: all
@@ -15,14 +16,12 @@
         name: gather_facts
         apply:
           become: false
-    # - name: Install Ansible inside the system
-    #   ansible.builtin.package:
-    #     name: ansible
-    #     state: present
+
     - name: Run install_packages role
       ansible.builtin.include_role:
         name: install_packages
 
+    # This role is skipped since there are currently no python packages being installed
     # - name: Run install_python_packages role
     #   ansible.builtin.include_role:
     #     name: install_python_packages
@@ -78,3 +77,8 @@
     - name: Run setup_dwm role
       ansible.builtin.include_role:
         name: setup_dwm
+
+    # This last role should NEVER be run in molecule, since theres no SystemD inside the docker container
+    # - name: Run setup_services role
+    #   ansible.builtin.include_role:
+    #     name: setup_services
