@@ -1,0 +1,23 @@
+" Special
+let wallpaper  = "/home/elendil/Pictures/std_wallpapers/saber.jpg"
+let background = "#090b1b"
+let foreground = "#f5e5c6"
+let cursor     = "#f5e5c6"
+
+" Colors
+let color0  = "#090b1b"
+let color1  = "#D46254"
+let color2  = "#D9A857"
+let color3  = "#F49E68"
+let color4  = "#6C438E"
+let color5  = "#B96492"
+let color6  = "#E89C90"
+let color7  = "#f5e5c6"
+let color8  = "#aba08a"
+let color9  = "#D46254"
+let color10 = "#D9A857"
+let color11 = "#F49E68"
+let color12 = "#6C438E"
+let color13 = "#B96492"
+let color14 = "#E89C90"
+let color15 = "#f5e5c6"

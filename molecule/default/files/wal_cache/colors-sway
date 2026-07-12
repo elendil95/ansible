@@ -1,0 +1,21 @@
+set $wallpaper /home/elendil/Pictures/std_wallpapers/saber.jpg
+
+set $background #090b1b
+set $foreground #f5e5c6
+
+set $color0 #090b1b
+set $color1 #D46254
+set $color2 #D9A857
+set $color3 #F49E68
+set $color4 #6C438E
+set $color5 #B96492
+set $color6 #E89C90
+set $color7 #f5e5c6
+set $color8 #aba08a
+set $color9 #D46254
+set $color10 #D9A857
+set $color11 #F49E68
+set $color12 #6C438E
+set $color13 #B96492
+set $color14 #E89C90
+set $color15 #f5e5c6
