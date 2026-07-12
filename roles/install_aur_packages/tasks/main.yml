@@ -4,7 +4,7 @@
     use: yay
     name:
       - urxvt-resize-font-git
-      - light-git
+      - light
       - ttf-ms-fonts
       - numix-icon-theme-git
     state: present
