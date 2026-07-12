@@ -1,0 +1,35 @@
+---
+dependency:
+  name: galaxy
+  options:
+    requirements-file: requirements.yml
+driver:
+  name: docker
+platforms:
+  - name: arch-extra-packages
+    image: archlinux/archlinux:latest
+    pre_build_image: true
+    command: sleep infinity
+    privileged: true
+provisioner:
+  name: ansible
+  config_options:
+    privilege_escalation:
+      become_ask_pass: false
+  inventory:
+    hosts:
+      all:
+        vars:
+          ansible_user: testuser
+          molecule_testing: true
+          git_username: "Test User"
+          git_email: "test@example.com"
+          git_editor: vim
+          git_mergetool: meld
+          git_difftool: meld
+          graphics: intel
+  playbooks:
+    prepare: ../default/prepare.yml
+    converge: converge.yml
+verifier:
+  name: ansible
