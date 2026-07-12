@@ -16,7 +16,7 @@
     use: yay
     name:
       - pa-applet-git
-      - syncthingtray
+      - syncthingtray-qt6
     state: present
   become: true
   become_user: aur_builder
