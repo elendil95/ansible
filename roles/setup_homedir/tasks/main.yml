@@ -14,6 +14,7 @@
     owner: "{{ remote_regular_user }}"
     group: "{{ remote_regular_user_group }}"
     mode: "0700"
+    remote_src: true
 
 - name: Allow local user to run some commands without sudo pw, so that scripts will work # If the username is dynamic, im not sure we can use the copy module
   become: true
@@ -109,7 +110,7 @@
 - name: Set GIT email for remote regular user # noqa: command-instead-of-module
   ansible.builtin.command: git config --global user.email {{ git_email }}
 - name: Set GIT Editor # noqa: command-instead-of-module
-  ansible.builtin.command: git config core.editor {{ git_editor }}
+  ansible.builtin.command: git config --global core.editor {{ git_editor }}
 - name: Set GIT merge-tool # noqa: command-instead-of-module
   ansible.builtin.command: git config --global merge.tool {{ git_mergetool }}
 - name: Set GIT diff-tool # noqa: command-instead-of-module
