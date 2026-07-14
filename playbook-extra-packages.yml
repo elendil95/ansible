@@ -35,6 +35,13 @@
           - easytag # Manage music metadata
           - gpodder # Gui Podcast manager, supports self-hosted sync service
           - libreoffice-fresh
+          - hunspell-en_us # Hunspell is the dictionary libreary used by libreoffice/firefox/etc
+          - hunspell-it
+          - hyphen-it # Hyphenation rules libreary with hunspell
+          - hyphen-en
+          - libmythes # Thesaurus support
+          - mythes-it
+          - mythes-en
           - # Pick some random gui pdf viewer
           - baobab
           - simple-scan # For document scanning
@@ -62,6 +69,7 @@
           - vscodium-bin
           - simplescreenrecorder
           - proxmox-backup-client-bin
+          - stavekontrolden # Dictionaries and spell checking for danish in Hunspell
     #       - masterpdfeditor # Proprietary PDF software, kinda sucks but its the best one to fill-in and sign stuff
     #       - sidewinderd # Macro support for Logitech G105
         state: present
