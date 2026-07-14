@@ -27,7 +27,7 @@
           - vlc-plugin-nfs # Access files off NFS
           - vlc-plugin-x264 # for H264/AVC encoding support
           - vlc-plugin-x265 # for H265/HEVC encoding support
-          - vlc-plugin-quicksync # QuickSync codec (?) support
+          # - vlc-plugin-quicksync # QuickSync codec (?) support
           # - intel-media-sdk Intel QuickSync support in vlc
           - qbittorrent
           - gimp
