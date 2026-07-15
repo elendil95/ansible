@@ -39,14 +39,17 @@
     executable: /usr/bin/bash
   register: wallpapers
   changed_when: true # Hardcore to true bc it does not matter
+  when: not (molecule_testing | default(false))
 
 - name: Set a wallpaper with pywall at random
   ansible.builtin.command: wal -i /home/{{ remote_regular_user }}/Pictures/std_wallpapers/{{ wallpapers.stdout_lines | random }}
   register: wal
   changed_when: true # Hardcore to true bc it does not matter
+  when: not (molecule_testing | default(false))
 
 - ansible.builtin.debug:
     msg: "wal output: {{ wal.stdout }}"
+  when: not (molecule_testing | default(false))
 
 - name: Add Xorg configuration for touchpads (tap-to-click)
   ansible.builtin.copy:

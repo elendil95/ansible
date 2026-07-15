@@ -1,7 +1,6 @@
 ---
 - name: Install Extra packages for a more "full" GUI Desktop
-  hosts: localhost
-  connection: local
+  hosts: all
   become: true
 
   tasks:
@@ -28,7 +27,7 @@
           - vlc-plugin-nfs # Access files off NFS
           - vlc-plugin-x264 # for H264/AVC encoding support
           - vlc-plugin-x265 # for H265/HEVC encoding support
-          - vlc-plugin-quicksync # QuickSync codec (?) support
+          # - vlc-plugin-quicksync # QuickSync codec (?) support
           # - intel-media-sdk Intel QuickSync support in vlc
           - qbittorrent
           - gimp
@@ -36,6 +35,13 @@
           - easytag # Manage music metadata
           - gpodder # Gui Podcast manager, supports self-hosted sync service
           - libreoffice-fresh
+          - hunspell-en_us # Hunspell is the dictionary libreary used by libreoffice/firefox/etc
+          - hunspell-it
+          - hyphen-it # Hyphenation rules libreary with hunspell
+          - hyphen-en
+          - libmythes # Thesaurus support
+          - mythes-it
+          - mythes-en
           - # Pick some random gui pdf viewer
           - baobab
           - simple-scan # For document scanning
@@ -63,6 +69,7 @@
           - vscodium-bin
           - simplescreenrecorder
           - proxmox-backup-client-bin
+          - stavekontrolden # Dictionaries and spell checking for danish in Hunspell
     #       - masterpdfeditor # Proprietary PDF software, kinda sucks but its the best one to fill-in and sign stuff
     #       - sidewinderd # Macro support for Logitech G105
         state: present

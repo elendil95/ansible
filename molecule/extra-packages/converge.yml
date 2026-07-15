@@ -1,0 +1,4 @@
+---
+- import_playbook: ../default/setup.yml
+- import_playbook: ../../playbook-extra-packages.yml
+- import_playbook: ../../playbook-cleanup.yml

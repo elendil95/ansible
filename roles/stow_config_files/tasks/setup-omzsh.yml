@@ -31,6 +31,7 @@
     group: "{{ remote_regular_user_group }}"
     mode: "0644"
     force: true
+    remote_src: true
   with_items:
     - aliases.zsh
     - example.zsh

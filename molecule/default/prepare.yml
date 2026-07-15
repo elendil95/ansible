@@ -1,0 +1,29 @@
+---
+# Runs as root because testuser doesn't exist yet.
+# After this play, Molecule switches to ansible_user: testuser for converge.
+- name: Prepare Arch container
+  hosts: all
+  gather_facts: false
+  vars:
+    ansible_user: root
+  tasks:
+    - name: Initialize pacman keyring
+      ansible.builtin.raw: pacman-key --init && pacman-key --populate archlinux
+      changed_when: true
+
+    - name: Sync package DB and install Ansible prerequisites
+      ansible.builtin.raw: pacman -Syy && pacman -S --noconfirm --needed python sudo
+      changed_when: true
+
+    - name: Create test user
+      ansible.builtin.user:
+        name: testuser
+        create_home: true
+        shell: /bin/bash
+
+    - name: Grant testuser passwordless sudo for all users and commands
+      ansible.builtin.copy:
+        content: "testuser ALL=(ALL:ALL) NOPASSWD: ALL\n"
+        dest: /etc/sudoers.d/testuser
+        mode: "0440"
+        validate: /usr/sbin/visudo -cf %s

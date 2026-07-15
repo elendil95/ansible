@@ -1,0 +1,27 @@
+{
+    "wallpaper": "/home/elendil/Pictures/std_wallpapers/saber.jpg",
+    "alpha": "100",
+    "special": {
+        "background": "#090b1b",
+        "foreground": "#f5e5c6",
+        "cursor": "#f5e5c6"
+    },
+    "colors": {
+        "color0": "#090b1b",
+        "color1": "#D46254",
+        "color2": "#D9A857",
+        "color3": "#F49E68",
+        "color4": "#6C438E",
+        "color5": "#B96492",
+        "color6": "#E89C90",
+        "color7": "#f5e5c6",
+        "color8": "#aba08a",
+        "color9": "#D46254",
+        "color10": "#D9A857",
+        "color11": "#F49E68",
+        "color12": "#6C438E",
+        "color13": "#B96492",
+        "color14": "#E89C90",
+        "color15": "#f5e5c6"
+    }
+}

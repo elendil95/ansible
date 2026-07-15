@@ -1,7 +1,6 @@
 ---
 - name: Install Software related to gaming, and a bunch of FOSS games.
-  hosts: localhost
-  connection: local
+  hosts: all
   become: true
 
   tasks:

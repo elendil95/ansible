@@ -1,0 +1,4 @@
+---
+# Runs the setup playbook (where most of the stuff is, and then cleanup)
+- import_playbook: setup.yml
+- import_playbook: ../../playbook-cleanup.yml

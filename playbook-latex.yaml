@@ -1,7 +1,6 @@
 ---
 - name: Install Latex packages.
-  hosts: localhost
-  connection: local
+  hosts: all
   become: true
 
   tasks:
