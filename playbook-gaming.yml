@@ -138,9 +138,11 @@
       community.general.pacman:
         name:
           - angband
+          - nethack
           - cataclysm-dda
           - cataclysm-dda-tiles
           - crawl-ncurses
+          - dwarfortress
           - openra
           - supertuxkart
           - xonotic
