@@ -35,6 +35,8 @@
           - qbittorrent
           - gimp
           - chromium
+          - obs-studio
+          - obs-studio-plugin-browser
           - quodlibet # GUI music manager
           - easytag # Manage music metadata
           - gpodder # Gui Podcast manager, supports self-hosted sync service
@@ -71,10 +73,12 @@
           - veracrypt
           - yt-dlp
           - deno
-
-
         state: latest
         extra_args: --needed --noconfirm
+
+    - name: Mark obs-studio-plugin-browser as a dependency
+      ansible.builtin.command: pacman -D --asdeps pacman -D --asdeps package_name
+      changed_when: false
 
     - name: Install random extra packages (from the AUR)
       kewlfft.aur.aur:
@@ -82,7 +86,6 @@
         name:
           - vscodium-bin
           - postman-bin
-          - simplescreenrecorder # Stupid, Just install OBS
           - eclipse-java-bin # For proper Java development. Assumes JDK was already installed in previous task.
           - hayase-desktop-bin # Anime streaming. N.B Must be setup with providers before use.
           - jellyfin-desktop
