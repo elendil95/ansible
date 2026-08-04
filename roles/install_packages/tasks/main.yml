@@ -19,9 +19,12 @@
       - xfce4-goodies
       - pavucontrol # probably wrong, does it support pipewire?
       - gvim
+      - ed # The Standard UNIX Editor^tm
+      - ethtool # Does something with eth interfaces, i forgot what
       - git
       - less
       - stow # Necessary to sim-link dotfiles into place
+      - jq # Format and un-marshalls JSON data.
       - openssh
       - curl
       - wget
@@ -36,6 +39,7 @@
       - ttf-hack # Technically pointless since we always the nerd-font version
       - ttf-hack-nerd
       - ttf-font-awesome # Used mainly for slstatus icons, i think
+      - terminus-font # Better TTY font with larger sizes
       - xdg-user-dirs
       - xdg-user-dirs-gtk
       - alacritty # Backup terminal, just in case
@@ -46,21 +50,24 @@
       - zsh-autosuggestions
       - zsh-completions
       - zsh-lovers
-      - tig
-      - gitui
-      - tldr
+      - tig # clearer git history view
+      - gitui # TUI for more advanced git operations, like committing and cherry-picking only given hunks.
+      - tldr # Quick command reference
+      - tree
       - tmux
       - ansible-lint
+      - vim-ansible
       - meld # Its here because we set it as default git difftool/mergetools
       - bluez
       - blueman
       - ristretto
       - ffmpeg
       - mpv
-      - fastfetch
+      - fastfetch # replaces neofetch
       - arandr
-      - net-tools
+      - net-tools # provides ifconfig, arp, route etc...
       - bind # Provides DNS tools (nslookip, dig etc.)
+      - whois
       - networkmanager
       - tlp # Power management on laptops.
       - htop
@@ -86,6 +93,7 @@
       - pv
       - os-prober
       - pacman-contrib # Provides some pacman scripts to check for updates etc
+      - rebuild-detector # Adds pacman hook and code to check if existing binary was built against a shared library version that no longer exists.
     state: latest
     extra_args: --needed --noconfirm
 
@@ -107,6 +115,9 @@
       - xorg-xbacklight
       - xorgproto
       - xorg-xkill
+      - xorg-xev # Useful for debugging keybinds etc
+      - x11-ssh-askpass # Mostly used when running Ansible against new hosts, keyrings are cringe
+      - xclip # some apps need its
       - light-locker
       - gnome-keyring
       - pamixer
@@ -142,11 +153,20 @@
   ansible.builtin.package_facts:
     manager: auto
 
-- name: Install pulseaudio if no audio system is present.
+- name: Install pulseaudio (with BT support) if no audio system is present.
   ansible.builtin.package:
-    name: pulseaudio
+    name:
+      - pulseaudio
+      - pulseaudio-bluetooth
     state: present
   when: "'pipewire-pulse' not in ansible_facts.packages and 'pulseaudio' not in ansible_facts.packages"
+
+- name: Install pulseaudio-bluetooth if not present.
+  ansible.builtin.package:
+    name:
+      - pulseaudio-bluetooth
+    state: present
+  when: "'pipewire-pulse' not in ansible_facts.packages and 'pulseaudio' in ansible_facts.packages"
 
 # ABOUT THE NTFS SITUATION
 # ========================
