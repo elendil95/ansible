@@ -10,6 +10,9 @@
           - rxvt-unicode # We already have alacritty as a backup terminal in the main playbook
           - urxvt-perls
           - zsh-doc
+          - jdk-openjdk # Defaults to latest OpenJDK release
+          - kubectl
+          - nano # Just to add bload
           - vlc # We already have MPV in the main playbook
           - vlc-plugin-ffmpeg
           - vlc-plugin-matroska # MKV support
@@ -31,6 +34,9 @@
           # - intel-media-sdk Intel QuickSync support in vlc
           - qbittorrent
           - gimp
+          - chromium
+          - obs-studio
+          - obs-studio-plugin-browser
           - quodlibet # GUI music manager
           - easytag # Manage music metadata
           - gpodder # Gui Podcast manager, supports self-hosted sync service
@@ -46,28 +52,44 @@
           - baobab
           - simple-scan # For document scanning
           - filezilla
+          - remmina # Remote Desktop
+          - libvncserver # VNC support in remmina
+          - spice-gtk # SPICE support in remmina
+          - freerdp # RDP support in remmina
           # - hexchat
+          - hugo # In case i wanna work on website. its light anyway
           - telegram-desktop
           - discord
           - wireshark-qt
+          - cheese
+          # - virtualbox
+          # - virtualbox-host-dkms # vbox host modules must be signed when running with SB, so no VBox for now.
           - qutebrowser # Unbloated browser with VIM keybinds
           - xournalpp # Hand-writing support with PDFs, for signing and such
           - shellcheck
+          - bash-completion
+          - bash-lanuage-server
           - shfmt
           - veracrypt
           - yt-dlp
           - deno
-
-
         state: latest
         extra_args: --needed --noconfirm
+
+    - name: Mark obs-studio-plugin-browser as a dependency
+      ansible.builtin.command: pacman -D --asdeps pacman -D --asdeps package_name
+      changed_when: false
 
     - name: Install random extra packages (from the AUR)
       kewlfft.aur.aur:
         use: yay
         name:
           - vscodium-bin
-          - simplescreenrecorder
+          - postman-bin
+          - eclipse-java-bin # For proper Java development. Assumes JDK was already installed in previous task.
+          - hayase-desktop-bin # Anime streaming. N.B Must be setup with providers before use.
+          - jellyfin-desktop
+          # - vesktop-bin # Discord but better
           - proxmox-backup-client-bin
           - stavekontrolden # Dictionaries and spell checking for danish in Hunspell
     #       - masterpdfeditor # Proprietary PDF software, kinda sucks but its the best one to fill-in and sign stuff
