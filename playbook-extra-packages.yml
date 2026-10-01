@@ -76,9 +76,9 @@
         state: latest
         extra_args: --needed --noconfirm
 
-    - name: Mark obs-studio-plugin-browser as a dependency
-      ansible.builtin.command: pacman -D --asdeps pacman -D --asdeps package_name
-      changed_when: false
+    # - name: Mark obs-studio-plugin-browser as a dependency
+    #   ansible.builtin.command: pacman -D --asdeps obs-studio-plugin-browser
+    #   changed_when: false
 
     - name: Install random extra packages (from the AUR)
       kewlfft.aur.aur:
