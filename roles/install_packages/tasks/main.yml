@@ -109,6 +109,7 @@
       - xsettingsd # Allows GUI apps in dwm to still have theming
       - network-manager-applet
       - redshift
+      - syncthingtray
       - xorg-server-devel
       - xorg-setxkbmap
       - xorg-xinit
