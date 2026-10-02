@@ -99,6 +99,14 @@
   notify:
     - Restart check-updates service
 
+- name: Create ~/.config/systemd/user dir
+  ansible.builtin.file:
+    path: /home/{{ remote_regular_user }}/.config/systemd/user
+    state: directory
+    owner: {{ remote_regular_user }}
+    group: {{ remote_regular_user_group }}
+    mode: "0755"
+
 - name: seed geoclue user service
   ansible.builtin.copy:
     src: geoclue-agent.service
