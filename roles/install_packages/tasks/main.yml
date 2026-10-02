@@ -107,6 +107,7 @@
       - picom
       - xsettingsd # Allows GUI apps in dwm to still have theming
       - network-manager-applet
+      - geoclue
       - redshift
       - syncthingtray
       - xorg-server-devel
