@@ -104,7 +104,6 @@
       - cmake
       - boost
       - imagemagick # Dependency for python-pywal
-      - python-pywal
       - picom
       - xsettingsd # Allows GUI apps in dwm to still have theming
       - network-manager-applet

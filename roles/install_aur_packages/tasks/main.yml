@@ -7,6 +7,7 @@
       - light
       - ttf-ms-fonts
       - numix-icon-theme-git
+      - python-pywal
     state: present
   become: true
   become_user: aur_builder
