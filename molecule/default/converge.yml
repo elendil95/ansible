@@ -1,4 +1,16 @@
 ---
 # Runs the setup playbook (where most of the stuff is, and then cleanup)
 - import_playbook: setup.yml
+
+# GPG deamons linger after builinf yay, so when running in molecule we need to get rid of them or polaybook-cleanup fails.
+# On read hardware, we'd reboot at least once before running playbook-cleanup so this should not be an issue.
+- name: Stop lingering aur_builder processes before cleanup
+  hosts: all
+  become: true
+  tasks:
+    - name: Kill any processes still running as aur_builder
+      ansible.builtin.command: pkill -KILL -u aur_builder
+      failed_when: false   # nothing to kill (e.g. already gone) is fine
+      changed_when: false
+
 - import_playbook: ../../playbook-cleanup.yml
