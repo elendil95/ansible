@@ -61,14 +61,13 @@
           - telegram-desktop
           - discord
           - wireshark-qt
-          - cheese
           # - virtualbox
           # - virtualbox-host-dkms # vbox host modules must be signed when running with SB, so no VBox for now.
           - qutebrowser # Unbloated browser with VIM keybinds
           - xournalpp # Hand-writing support with PDFs, for signing and such
           - shellcheck
           - bash-completion
-          - bash-lanuage-server
+          - bash-language-server
           - shfmt
           - veracrypt
           - yt-dlp
@@ -84,6 +83,7 @@
       kewlfft.aur.aur:
         use: yay
         name:
+          - cheese
           - vscodium-bin
           - postman-bin
           - eclipse-java-bin # For proper Java development. Assumes JDK was already installed in previous task.
