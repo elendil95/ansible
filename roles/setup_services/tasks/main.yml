@@ -107,7 +107,7 @@
     group: "{{ remote_regular_user_group }}"
     mode: "0755"
 
-- name: seed geoclue user service
+- name: Seed geoclue user service
   ansible.builtin.copy:
     src: geoclue-agent.service
     dest: /home/{{ remote_regular_user }}/.config/systemd/user/geoclue-agent.service
@@ -116,3 +116,14 @@
     mode: "0644"
   notify:
     - Start geoclue user service
+
+- name: Seed reflector config file
+  ansible.builtin.copy:
+    src: reflector.conf
+    dest: /etc/xdg/reflector/reflector.conf
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - Restart reflector service
+    - Restart reflector timer

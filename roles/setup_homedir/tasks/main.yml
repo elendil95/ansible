@@ -97,6 +97,15 @@
     mode: "0644"
   become: true
 
+- name: Setup console noto-fonts
+  ansible.builtin.copy:
+    src: vconsole.conf
+    dest: /etc/vconsole.conf
+    owner: root
+    group: root
+    mode: "0644"
+  become: true
+
 - name: Create an SSH key for remote regular user
   ansible.builtin.user:
     name: "{{ remote_regular_user }}"
