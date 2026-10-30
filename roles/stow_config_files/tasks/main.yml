@@ -43,6 +43,23 @@
     chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
     creates: /home/{{ remote_regular_user }}/.config/redshift/redshift.conf
 
+- name: Stow pi-agent
+  ansible.builtin.command: stow -v pi-agent -t /home/{{ remote_regular_user }}
+  args:
+    chdir: /home/{{ remote_regular_user }}/GithubRepos/dotfiles
+    creates: /home/{{ remote_regular_user }}/.pi/agent/settings.json
+
+- name: Check if pi extension packages are installed
+  ansible.builtin.stat:
+    path: /home/{{ remote_regular_user }}/.pi/agent/npm/node_modules
+  register: pi_node_modules
+
+- name: Reconcile pi extension packages # noqa: command-instead-of-module
+  ansible.builtin.command: /home/{{ remote_regular_user }}/.pi/agent/bin/pi update --extensions
+  args:
+    chdir: /home/{{ remote_regular_user }}
+  changed_when: not pi_node_modules.stat.exists
+
 - name: Run OMZ tasklist
   ansible.builtin.import_tasks:
     file: setup-omzsh.yml

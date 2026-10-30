@@ -124,3 +124,21 @@
   ansible.builtin.command: git config --global merge.tool {{ git_mergetool }}
 - name: Set GIT diff-tool # noqa: command-instead-of-module
   ansible.builtin.command: git config --global diff.tool {{ git_difftool }}
+
+- name: Check if pi is installed
+  ansible.builtin.stat:
+    path: /home/{{ remote_regular_user }}/.pi/agent/install
+  register: pi_install
+
+- name: Download pi install script
+  ansible.builtin.get_url:
+    url: https://pi.dev/install.sh
+    dest: /tmp/pi-install.sh
+    mode: "0755"
+  when: not pi_install.stat.exists
+
+- name: Install pi
+  ansible.builtin.command: /tmp/pi-install.sh
+  args:
+    chdir: /home/{{ remote_regular_user }}
+  when: not pi_install.stat.exists
