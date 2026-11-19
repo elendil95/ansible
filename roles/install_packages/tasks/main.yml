@@ -78,6 +78,7 @@
       - exfatprogs # support reading exFAT
       - f2fs-tools # supports reading f2fs (that one SSD FS)
       - ntfs-3g # See note at the bottom!
+      - ntfsprogs # ntfs-3g alone is not enough for gparted.
       - mtools # Support reading DOS file systems (whatever that means)
       - rsync
       - lm_sensors # Enable use of temperature sensors, will error out in VBox
