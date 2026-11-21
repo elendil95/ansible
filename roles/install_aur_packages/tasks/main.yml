@@ -8,6 +8,7 @@
       - ttf-ms-fonts
       - numix-icon-theme-git
       - python-pywal
+      - claude-code
     state: present
   become: true
   become_user: aur_builder

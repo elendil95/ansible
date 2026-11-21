@@ -96,6 +96,9 @@
       - pacman-contrib # Provides some pacman scripts to check for updates etc
       - rebuild-detector # Adds pacman hook and code to check if existing binary was built against a shared library version that no longer exists.
       - reflector
+      - fd # fd, nodejs and npm needed for pi-agent
+      - nodejs 
+      - npm 
     state: latest
     extra_args: --needed --noconfirm
 
